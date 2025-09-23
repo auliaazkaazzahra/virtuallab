@@ -97,8 +97,50 @@
 
         // Navigation Functions
         function showSimulation(labId) {
-            // Redirect to simulation.html with lab parameter
-            window.location.href = `simulation.html?lab=${labId}`;
+            // Check if lab is available
+            if (labId === 'newton-laws') {
+                // Only Newton Laws simulation is available
+                window.location.href = `simulation.html?lab=${labId}`;
+            } else {
+                // Show coming soon notification for other labs
+                showComingSoonNotification(labId);
+            }
+        }
+
+        function showComingSoonNotification(labId) {
+            // Find lab data
+            const lab = labsData.find(l => l.id === labId);
+
+            // Create notification modal
+            const modal = document.createElement('div');
+            modal.className = 'coming-soon-modal';
+            modal.innerHTML = `
+                <div class="coming-soon-content">
+                    <div class="coming-soon-icon">${lab.icon}</div>
+                    <h3>Simulasi Akan Segera Tersedia!</h3>
+                    <p><strong>${lab.title}</strong></p>
+                    <p style="margin-bottom: 20px; color: #666;">Lab ini sedang dalam pengembangan dan akan segera hadir dengan simulasi interaktif yang menarik.</p>
+                    <button class="btn btn-primary" onclick="closeComingSoonModal()">Mengerti</button>
+                </div>
+            `;
+
+            // Add modal to page
+            document.body.appendChild(modal);
+
+            // Add fade in animation
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 100);
+        }
+
+        function closeComingSoonModal() {
+            const modal = document.querySelector('.coming-soon-modal');
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
         }
 
         function logout() {
@@ -145,7 +187,7 @@
                             <span>📊 ${lab.difficulty}</span>
                         </div>
                         <button class="btn btn-primary" onclick="showSimulation('${lab.id}')" style="width: 100%;">
-                            ${lab.completed ? '🔄 Ulangi Lab' : '🚀 Mulai Lab'}
+                            ${lab.id === 'newton-laws' ? (lab.completed ? '🔄 Ulangi Lab' : '🚀 Mulai Lab') : '🔮 Segera Hadir'}
                         </button>
                     </div>
                 `;
