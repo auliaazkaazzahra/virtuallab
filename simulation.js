@@ -284,7 +284,6 @@
         }
     }
 
-
     // UI CONTROLLER
     class UIController {
         constructor() {
@@ -347,6 +346,15 @@
             resetBtn?.addEventListener('click', () => {
                 this.reset();
                 this.audioManager.playSound('reset', 0.6);
+            });
+
+            // Download button
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn?.addEventListener('click', () => {
+                downloadBtn.classList.add('bounce');
+                setTimeout(() => {
+                    downloadBtn.classList.remove('bounce');
+                }, 500);
             });
 
             // Keyboard shortcuts
@@ -505,6 +513,131 @@
 
             this.uiController.initialize(this.canvas);
         }
+}
+
+// DOWNLOAD FUNCTIONALITY
+function downloadSimulationReport() {
+    // Get current simulation data
+    const mass = document.getElementById('massDisplay').textContent;
+    const force = document.getElementById('forceDisplay').textContent;
+    const acceleration = document.getElementById('accelerationValue').textContent;
+    const velocity = document.getElementById('velocityValue').textContent;
+    const position = document.getElementById('positionValue').textContent;
+    const time = document.getElementById('timeValue').textContent;
+    const calculation = document.getElementById('calculationDisplay').textContent;
+    const status = document.getElementById('simulationStatus').textContent;
+
+    // Get simulation statistics
+    const simulationCount = document.getElementById('simulationCount').textContent;
+    const totalTime = document.getElementById('totalTime').textContent;
+
+    // Generate report content
+    const reportContent = `
+LAPORAN HASIL SIMULASI FISIKALAB
+=====================================
+
+INFORMASI SIMULASI
+------------------
+Judul Simulasi: Hukum Newton II (F = ma)
+Tanggal: ${new Date().toLocaleDateString('id-ID')}
+Waktu: ${new Date().toLocaleString('id-ID')}
+
+PARAMETER SIMULASI
+------------------
+Massa Objek: ${mass}
+Gaya yang Diberikan: ${force}
+Percepatan: ${acceleration} m/s²
+Kecepatan: ${velocity} m/s
+Posisi: ${position} m
+Waktu Simulasi: ${time} detik
+
+PERHITUNGAN FISIK
+-----------------
+${calculation}
+
+STATUS SIMULASI
+---------------
+${status}
+
+STATISTIK PENGGUNAAN
+--------------------
+Jumlah Simulasi: ${simulationCount}
+Total Waktu Simulasi: ${totalTime} detik
+
+TEORI DASAR
+-----------
+Hukum Newton II menyatakan bahwa percepatan suatu benda
+berbanding lurus dengan gaya total yang bekerja padanya
+dan berbanding terbalik dengan massanya.
+
+Rumus: F = m × a
+
+Dimana:
+- F = Gaya total (Newton)
+- m = Massa benda (kilogram)
+- a = Percepatan (m/s²)
+
+KESIMPULAN
+----------
+Simulasi ini menunjukkan hubungan antara gaya, massa,
+dan percepatan sesuai dengan Hukum Newton II. Semakin
+besar massa benda, semakin kecil percepatan yang dihasilkan
+untuk gaya yang sama, dan sebaliknya.
+
+=====================================
+Laporan ini dihasilkan oleh PhysicsLab Virtual
+Educational Physics Simulation Platform
+=====================================
+    `.trim();
+
+    // Create and download the file
+    const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Laporan_Simulasi_Newton_${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    // Play download sound effect
+    if (window.simulation && window.simulation.uiController) {
+        window.simulation.uiController.audioManager.playSound('download', 0.6);
+    }
+
+    // Show success message
+    showNotification('✅ Laporan berhasil didownload!', 'success');
+}
+
+// NOTIFICATION SYSTEM
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">
+                ${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}
+            </span>
+            <span class="notification-message">${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    `;
+
+    // Add to page
+    document.body.appendChild(notification);
+
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 3000);
 }
 
 // Initialize simulation when DOM is loaded

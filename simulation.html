@@ -25,8 +25,13 @@
             <div class="simulation-section fade-in" id="simulation">
                 <div class="simulation-header">
                     <div class="simulation-title">🎯 Area Simulasi</div>
-                    <div class="simulation-status status-ready" id="simulationStatus">
-                        ● Siap Dimulai
+                    <div class="simulation-controls">
+                        <div class="simulation-status status-ready" id="simulationStatus">
+                            ● Siap Dimulai
+                        </div>
+                        <button class="btn btn-download" id="downloadBtn" onclick="downloadSimulationReport()">
+                            📥 Download Hasil
+                        </button>
                     </div>
                 </div>
                 <canvas id="canvas" width="700" height="450"></canvas>
