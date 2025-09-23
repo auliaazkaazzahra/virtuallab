@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhysicsLab Virtual - Dashboard</title>
+    <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+    <!-- Homepage Dashboard -->
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="dashboard-nav">
+                    <div class="logo">🧪 PhysicsLab Virtual</div>
+                    <div class="user-info">
+                        <span id="userName">John Doe</span>
+                        <div class="avatar" id="userAvatar">JD</div>
+                        <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">
+                            Keluar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="welcome-section fade-in">
+                    <h1>Selamat Datang di PhysicsLab Virtual! 👋</h1>
+                    <p>Mulai eksplorasi konsep fisika dengan simulasi interaktif yang menarik</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="completedLabs">5</div>
+                        <div>Lab Selesai</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalTime">24</div>
+                        <div>Jam Belajar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="achievements">12</div>
+                        <div>Pencapaian</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="currentStreak">7</div>
+                        <div>Hari Berturut</div>
+                    </div>
+                </div>
+
+                <h2 style="margin-bottom: 30px; color: #333;">Laboratorium Virtual</h2>
+                <div class="labs-grid" id="labsGrid">
+                    <!-- Lab cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Application State
+        let currentUser = null;
+
+        // Lab Data
+        const labsData = [
+            {
+                id: 'newton-laws',
+                title: 'Hukum Newton',
+                description: 'Pelajari tiga hukum Newton dengan simulasi interaktif. Eksperimen dengan massa, gaya, dan percepatan.',
+                icon: '🚀',
+                difficulty: 'Pemula',
+                duration: '30 menit',
+                completed: true
+            },
+            {
+                id: 'projectile-motion',
+                title: 'Gerak Proyektil',
+                description: 'Simulasi gerak peluru dengan berbagai sudut dan kecepatan awal. Analisis lintasan dan jangkauan.',
+                icon: '🎯',
+                difficulty: 'Menengah',
+                duration: '45 menit',
+                completed: false
+            },
+            {
+                id: 'waves-oscillation',
+                title: 'Gelombang & Osilasi',
+                description: 'Eksplorasi gelombang mekanik, frekuensi, amplitudo, dan fenomena interferensi.',
+                icon: '🌊',
+                difficulty: 'Menengah',
+                duration: '40 menit',
+                completed: false
+            },
+            {
+                id: 'thermodynamics',
+                title: 'Termodinamika',
+                description: 'Simulasi proses termodinamika, hukum gas ideal, dan siklus Carnot.',
+                icon: '🌡️',
+                difficulty: 'Lanjut',
+                duration: '60 menit',
+                completed: false
+            },
+            {
+                id: 'electromagnetism',
+                title: 'Elektromagnetisme',
+                description: 'Visualisasi medan listrik, medan magnet, dan induksi elektromagnetik.',
+                icon: '⚡',
+                difficulty: 'Lanjut',
+                duration: '50 menit',
+                completed: false
+            },
+            {
+                id: 'optics',
+                title: 'Optik Geometris',
+                description: 'Simulasi pembiasan, pemantulan, dan pembentukan bayangan pada lensa dan cermin.',
+                icon: '🔍',
+                difficulty: 'Menengah',
+                duration: '35 menit',
+                completed: false
+            }
+        ];
+
+        // Navigation Functions
+        function showSimulation(labId) {
+            // Redirect to simulation.html with lab parameter
+            window.location.href = `simulation.html?lab=${labId}`;
+        }
+
+        function logout() {
+            // Clear user session
+            localStorage.removeItem('currentUser');
+            // Add fade out animation
+            document.body.style.transition = 'opacity 0.3s ease';
+            document.body.style.opacity = '0';
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 300);
+        }
+
+        // Dashboard Functions
+        function updateUserInfo() {
+            // Get user data from localStorage
+            const userData = localStorage.getItem('currentUser');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userAvatar').textContent = currentUser.avatar;
+            } else {
+                // If no user data, redirect to login
+                window.location.href = 'index.html';
+            }
+        }
+
+        function populateLabsGrid() {
+            const grid = document.getElementById('labsGrid');
+            grid.innerHTML = '';
+
+            labsData.forEach(lab => {
+                const labCard = document.createElement('div');
+                labCard.className = 'lab-card fade-in';
+                labCard.innerHTML = `
+                    <div class="lab-image">
+                        ${lab.icon}
+                    </div>
+                    <div class="lab-content">
+                        <div class="lab-title">${lab.title}</div>
+                        <div class="lab-description">${lab.description}</div>
+                        <div class="lab-meta">
+                            <span>📊 ${lab.difficulty}</span>
+                            <span>⏱️ ${lab.duration}</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="showSimulation('${lab.id}')" style="width: 100%;">
+                            ${lab.completed ? '🔄 Ulangi Lab' : '🚀 Mulai Lab'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(labCard);
+            });
+        }
+
+        // Initialize homepage
+        window.addEventListener('load', () => {
+            // Check if user is logged in
+            updateUserInfo();
+
+            // Populate labs grid
+            populateLabsGrid();
+
+            // Add some demo data animation
+            setTimeout(() => {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                statNumbers.forEach(stat => {
+                    const finalValue = parseInt(stat.textContent);
+                    let currentValue = 0;
+                    const increment = finalValue / 20;
+
+                    const counter = setInterval(() => {
+                        currentValue += increment;
+                        if (currentValue >= finalValue) {
+                            stat.textContent = finalValue;
+                            clearInterval(counter);
+                        } else {
+                            stat.textContent = Math.floor(currentValue);
+                        }
+                    }, 50);
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
