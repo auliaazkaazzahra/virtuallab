@@ -16,7 +16,7 @@
                     <div class="user-info">
                         <span id="userName">John Doe</span>
                         <div class="avatar" id="userAvatar">JD</div>
-                        <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">
+                        <button class="btn btn-secondary" onclick="NavigationManager.logout()" style="padding: 8px 16px;">
                             Keluar
                         </button>
                     </div>
@@ -40,140 +40,125 @@
     </div>
 
     <script>
-        // Application State
-        let currentUser = null;
+    
+        // PHYSICSLAB HOMEPAGE - MODULAR JAVASCRIPT
 
-        // Lab Data
-        const labsData = [
-            {
-                id: 'newton-laws',
-                title: 'Hukum II Newton',
-                description: 'Pelajari hukum II Newton dengan simulasi interaktif. Eksperimen dengan massa, gaya, dan percepatan.',
-                icon: '🚀',
-                difficulty: 'Pemula',
-                completed: true
+        // CONFIGURATION & CONSTANTS
+        const CONFIG = {
+            AVAILABLE_LABS: ['newton-laws'],
+            STORAGE_KEYS: {
+                USER: 'currentUser'
             },
-            {
-                id: 'projectile-motion',
-                title: 'Gerak Proyektil',
-                description: 'Simulasi gerak peluru dengan berbagai sudut dan kecepatan awal. Analisis lintasan dan jangkauan.',
-                icon: '🎯',
-                difficulty: 'Menengah',
-                completed: false
-            },
-            {
-                id: 'waves-oscillation',
-                title: 'Gelombang & Osilasi',
-                description: 'Eksplorasi gelombang mekanik, frekuensi, amplitudo, dan fenomena interferensi.',
-                icon: '🌊',
-                difficulty: 'Menengah',
-                completed: false
-            },
-            {
-                id: 'thermodynamics',
-                title: 'Termodinamika',
-                description: 'Simulasi proses termodinamika, hukum gas ideal, dan siklus Carnot.',
-                icon: '🌡️',
-                difficulty: 'Lanjut',
-                completed: false
-            },
-            {
-                id: 'electromagnetism',
-                title: 'Elektromagnetisme',
-                description: 'Visualisasi medan listrik, medan magnet, dan induksi elektromagnetik.',
-                icon: '⚡',
-                difficulty: 'Lanjut',
-                completed: false
-            },
-            {
-                id: 'optics',
-                title: 'Optik Geometris',
-                description: 'Simulasi pembiasan, pemantulan, dan pembentukan bayangan pada lensa dan cermin.',
-                icon: '🔍',
-                difficulty: 'Menengah',
-                completed: false
+            ANIMATION: {
+                DURATION: 300,
+                FADE_OUT: 'opacity 0.3s ease'
             }
-        ];
+        };
 
-        // Navigation Functions
-        function showSimulation(labId) {
+        // DATA LAYER
+        const DataManager = {
+            // Lab data - centralized data management
+            labsData: [
+                {
+                    id: 'newton-laws',
+                    title: 'Hukum II Newton',
+                    description: 'Pelajari hukum II Newton dengan simulasi interaktif. Eksperimen dengan massa, gaya, dan percepatan.',
+                    icon: '🚀',
+                    difficulty: 'Pemula',
+                    completed: true
+                },
+                {
+                    id: 'projectile-motion',
+                    title: 'Gerak Proyektil',
+                    description: 'Simulasi gerak peluru dengan berbagai sudut dan kecepatan awal. Analisis lintasan dan jangkauan.',
+                    icon: '🎯',
+                    difficulty: 'Menengah',
+                    completed: false
+                },
+                {
+                    id: 'waves-oscillation',
+                    title: 'Gelombang & Osilasi',
+                    description: 'Eksplorasi gelombang mekanik, frekuensi, amplitudo, dan fenomena interferensi.',
+                    icon: '🌊',
+                    difficulty: 'Menengah',
+                    completed: false
+                },
+                {
+                    id: 'thermodynamics',
+                    title: 'Termodinamika',
+                    description: 'Simulasi proses termodinamika, hukum gas ideal, dan siklus Carnot.',
+                    icon: '🌡️',
+                    difficulty: 'Lanjut',
+                    completed: false
+                },
+                {
+                    id: 'electromagnetism',
+                    title: 'Elektromagnetisme',
+                    description: 'Visualisasi medan listrik, medan magnet, dan induksi elektromagnetik.',
+                    icon: '⚡',
+                    difficulty: 'Lanjut',
+                    completed: false
+                },
+                {
+                    id: 'optics',
+                    title: 'Optik Geometris',
+                    description: 'Simulasi pembiasan, pemantulan, dan pembentukan bayangan pada lensa dan cermin.',
+                    icon: '🔍',
+                    difficulty: 'Menengah',
+                    completed: false
+                }
+            ],
+
+            // Get lab by ID
+            getLabById(labId) {
+                return this.labsData.find(lab => lab.id === labId);
+            },
+
             // Check if lab is available
-            if (labId === 'newton-laws') {
-                // Only Newton Laws simulation is available
-                window.location.href = `simulation.html?lab=${labId}`;
-            } else {
-                // Show coming soon notification for other labs
-                showComingSoonNotification(labId);
-            }
-        }
+            isLabAvailable(labId) {
+                return CONFIG.AVAILABLE_LABS.includes(labId);
+            },
 
-        function showComingSoonNotification(labId) {
-            // Find lab data
-            const lab = labsData.find(l => l.id === labId);
+            // Get user data from storage
+            getCurrentUser() {
+                const userData = localStorage.getItem(CONFIG.STORAGE_KEYS.USER);
+                return userData ? JSON.parse(userData) : null;
+            },
 
-            // Create notification modal
-            const modal = document.createElement('div');
-            modal.className = 'coming-soon-modal';
-            modal.innerHTML = `
-                <div class="coming-soon-content">
-                    <div class="coming-soon-icon">${lab.icon}</div>
-                    <h3>Simulasi Akan Segera Tersedia!</h3>
-                    <p><strong>${lab.title}</strong></p>
-                    <p style="margin-bottom: 20px; color: #666;">Lab ini sedang dalam pengembangan dan akan segera hadir dengan simulasi interaktif yang menarik.</p>
-                    <button class="btn btn-primary" onclick="closeComingSoonModal()">Mengerti</button>
-                </div>
-            `;
+            // Save user data to storage
+            saveCurrentUser(user) {
+                localStorage.setItem(CONFIG.STORAGE_KEYS.USER, JSON.stringify(user));
+            },
 
-            // Add modal to page
-            document.body.appendChild(modal);
-
-            // Add fade in animation
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 100);
-        }
-
-        function closeComingSoonModal() {
-            const modal = document.querySelector('.coming-soon-modal');
-            if (modal) {
-                modal.classList.remove('show');
-                setTimeout(() => {
-                    modal.remove();
-                }, 300);
-            }
-        }
-
-        function logout() {
             // Clear user session
-            localStorage.removeItem('currentUser');
-            // Add fade out animation
-            document.body.style.transition = 'opacity 0.3s ease';
-            document.body.style.opacity = '0';
-
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 300);
-        }
-
-        // Dashboard Functions
-        function updateUserInfo() {
-            // Get user data from localStorage
-            const userData = localStorage.getItem('currentUser');
-            if (userData) {
-                currentUser = JSON.parse(userData);
-                document.getElementById('userName').textContent = currentUser.name;
-                document.getElementById('userAvatar').textContent = currentUser.avatar;
-            } else {
-                // If no user data, redirect to login
-                window.location.href = 'index.html';
+            clearUserSession() {
+                localStorage.removeItem(CONFIG.STORAGE_KEYS.USER);
             }
-        }
+        };
 
-        function populateLabsGrid() {
-            const grid = document.getElementById('labsGrid');
-            grid.innerHTML = '';
+        // UI CONTROLLER
+        const UIManager = {
+            // Update user interface elements
+            updateUserInfo(user) {
+                if (user) {
+                    document.getElementById('userName').textContent = user.name;
+                    document.getElementById('userAvatar').textContent = user.avatar;
+                }
+            },
 
-            labsData.forEach(lab => {
+            // Populate labs grid with cards
+            populateLabsGrid() {
+                const grid = document.getElementById('labsGrid');
+                grid.innerHTML = '';
+
+                DataManager.labsData.forEach(lab => {
+                    const labCard = this.createLabCard(lab);
+                    grid.appendChild(labCard);
+                });
+            },
+
+            // Create individual lab card
+            createLabCard(lab) {
                 const labCard = document.createElement('div');
                 labCard.className = 'lab-card fade-in';
                 labCard.innerHTML = `
@@ -186,25 +171,127 @@
                         <div class="lab-meta">
                             <span>📊 ${lab.difficulty}</span>
                         </div>
-                        <button class="btn btn-primary" onclick="showSimulation('${lab.id}')" style="width: 100%;">
-                            ${lab.id === 'newton-laws' ? (lab.completed ? '🔄 Ulangi Lab' : '🚀 Mulai Lab') : '🔮 Segera Hadir'}
+                        <button class="btn btn-primary" onclick="NavigationManager.showSimulation('${lab.id}')" style="width: 100%;">
+                            ${this.getButtonText(lab)}
                         </button>
                     </div>
                 `;
-                grid.appendChild(labCard);
-            });
-        }
+                return labCard;
+            },
 
-        // Initialize homepage
-        window.addEventListener('load', () => {
-            // Check if user is logged in
-            updateUserInfo();
+            // Get appropriate button text based on lab status
+            getButtonText(lab) {
+                if (DataManager.isLabAvailable(lab.id)) {
+                    return lab.completed ? '🔄 Ulangi Lab' : '🚀 Mulai Lab';
+                }
+                return '🔮 Segera Hadir';
+            },
 
-            // Populate labs grid
-            populateLabsGrid();
+            // Show coming soon modal
+            showComingSoonModal(lab) {
+                const modal = document.createElement('div');
+                modal.className = 'coming-soon-modal';
+                modal.innerHTML = `
+                    <div class="coming-soon-content">
+                        <div class="coming-soon-icon">${lab.icon}</div>
+                        <h3>Simulasi Akan Segera Tersedia!</h3>
+                        <p><strong>${lab.title}</strong></p>
+                        <p style="margin-bottom: 20px; color: #666;">Lab ini sedang dalam pengembangan dan akan segera hadir dengan simulasi interaktif yang menarik.</p>
+                        <button class="btn btn-primary" onclick="UIManager.closeComingSoonModal()">Mengerti</button>
+                    </div>
+                `;
 
-            // Initialize completed
+                document.body.appendChild(modal);
+                setTimeout(() => modal.classList.add('show'), 100);
+            },
+
+            // Close coming soon modal
+            closeComingSoonModal() {
+                const modal = document.querySelector('.coming-soon-modal');
+                if (modal) {
+                    modal.classList.remove('show');
+                    setTimeout(() => modal.remove(), CONFIG.ANIMATION.DURATION);
+                }
+            },
+
+            // Add fade out animation to page
+            fadeOutPage(callback) {
+                document.body.style.transition = CONFIG.ANIMATION.FADE_OUT;
+                document.body.style.opacity = '0';
+
+                setTimeout(callback, CONFIG.ANIMATION.DURATION);
+            }
+        };
+
+        // NAVIGATION MANAGER
+        const NavigationManager = {
+            // Handle lab simulation navigation
+            showSimulation(labId) {
+                if (DataManager.isLabAvailable(labId)) {
+                    // Available lab - redirect to simulation
+                    window.location.href = `simulation.html?lab=${labId}`;
+                } else {
+                    // Coming soon lab - show notification
+                    const lab = DataManager.getLabById(labId);
+                    UIManager.showComingSoonModal(lab);
+                }
+            },
+
+            // Handle user logout
+            logout() {
+                DataManager.clearUserSession();
+                UIManager.fadeOutPage(() => {
+                    window.location.href = 'index.html';
+                });
+            }
+        };
+
+
+        // APPLICATION CONTROLLER
+        const AppController = {
+            // Initialize the application
+            init() {
+                this.checkAuthentication();
+                this.initializeUI();
+                this.bindEvents();
+            },
+
+            // Check if user is authenticated
+            checkAuthentication() {
+                const user = DataManager.getCurrentUser();
+                if (user) {
+                    UIManager.updateUserInfo(user);
+                } else {
+                    // Redirect to login if not authenticated
+                    window.location.href = 'index.html';
+                }
+            },
+
+            // Initialize user interface
+            initializeUI() {
+                UIManager.populateLabsGrid();
+            },
+
+            // Bind global event listeners
+            bindEvents() {
+                // Make functions globally available
+                window.NavigationManager = NavigationManager;
+                window.UIManager = UIManager;
+                window.DataManager = DataManager;
+                window.AppController = AppController;
+            }
+        };
+
+        // APPLICATION INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            AppController.init();
         });
+
+
+        // GLOBAL FUNCTION EXPORTS
+        // Keep these for backward compatibility
+        function showSimulation(labId) { NavigationManager.showSimulation(labId); }
+        function logout() { NavigationManager.logout(); }
     </script>
 </body>
 </html>
