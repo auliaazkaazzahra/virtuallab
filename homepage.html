@@ -31,25 +31,6 @@
                     <p>Mulai eksplorasi konsep fisika dengan simulasi interaktif yang menarik</p>
                 </div>
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="completedLabs">5</div>
-                        <div>Lab Selesai</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalTime">24</div>
-                        <div>Jam Belajar</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="achievements">12</div>
-                        <div>Pencapaian</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="currentStreak">7</div>
-                        <div>Hari Berturut</div>
-                    </div>
-                </div>
-
                 <h2 style="margin-bottom: 30px; color: #333;">Laboratorium Virtual</h2>
                 <div class="labs-grid" id="labsGrid">
                     <!-- Lab cards will be populated by JavaScript -->
@@ -70,7 +51,6 @@
                 description: 'Pelajari tiga hukum Newton dengan simulasi interaktif. Eksperimen dengan massa, gaya, dan percepatan.',
                 icon: '🚀',
                 difficulty: 'Pemula',
-                duration: '30 menit',
                 completed: true
             },
             {
@@ -79,7 +59,6 @@
                 description: 'Simulasi gerak peluru dengan berbagai sudut dan kecepatan awal. Analisis lintasan dan jangkauan.',
                 icon: '🎯',
                 difficulty: 'Menengah',
-                duration: '45 menit',
                 completed: false
             },
             {
@@ -88,7 +67,6 @@
                 description: 'Eksplorasi gelombang mekanik, frekuensi, amplitudo, dan fenomena interferensi.',
                 icon: '🌊',
                 difficulty: 'Menengah',
-                duration: '40 menit',
                 completed: false
             },
             {
@@ -97,7 +75,6 @@
                 description: 'Simulasi proses termodinamika, hukum gas ideal, dan siklus Carnot.',
                 icon: '🌡️',
                 difficulty: 'Lanjut',
-                duration: '60 menit',
                 completed: false
             },
             {
@@ -106,7 +83,6 @@
                 description: 'Visualisasi medan listrik, medan magnet, dan induksi elektromagnetik.',
                 icon: '⚡',
                 difficulty: 'Lanjut',
-                duration: '50 menit',
                 completed: false
             },
             {
@@ -115,7 +91,6 @@
                 description: 'Simulasi pembiasan, pemantulan, dan pembentukan bayangan pada lensa dan cermin.',
                 icon: '🔍',
                 difficulty: 'Menengah',
-                duration: '35 menit',
                 completed: false
             }
         ];
@@ -168,7 +143,6 @@
                         <div class="lab-description">${lab.description}</div>
                         <div class="lab-meta">
                             <span>📊 ${lab.difficulty}</span>
-                            <span>⏱️ ${lab.duration}</span>
                         </div>
                         <button class="btn btn-primary" onclick="showSimulation('${lab.id}')" style="width: 100%;">
                             ${lab.completed ? '🔄 Ulangi Lab' : '🚀 Mulai Lab'}
@@ -187,25 +161,7 @@
             // Populate labs grid
             populateLabsGrid();
 
-            // Add some demo data animation
-            setTimeout(() => {
-                const statNumbers = document.querySelectorAll('.stat-number');
-                statNumbers.forEach(stat => {
-                    const finalValue = parseInt(stat.textContent);
-                    let currentValue = 0;
-                    const increment = finalValue / 20;
-
-                    const counter = setInterval(() => {
-                        currentValue += increment;
-                        if (currentValue >= finalValue) {
-                            stat.textContent = finalValue;
-                            clearInterval(counter);
-                        } else {
-                            stat.textContent = Math.floor(currentValue);
-                        }
-                    }, 50);
-                });
-            }, 1000);
+            // Initialize completed
         });
     </script>
 </body>
