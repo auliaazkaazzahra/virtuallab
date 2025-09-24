@@ -32,6 +32,10 @@ class NewtonLawSimulation {
       // Sound properties
       this.soundEnabled = true
       this.audioContext = null
+
+      // Video recording properties
+      this.mediaRecorder = null
+      this.isRecording = false
   
       this.initializeControls()
       this.initializeAudio()
@@ -98,31 +102,74 @@ class NewtonLawSimulation {
       })
     }
   
-    // Placeholder for a future report download function (referenced by HTML button).
-    // You can later implement actual report generation here if needed.
+    // Video download function using MediaRecorder
     initializeDownload() {
       window.downloadSimulationReport = () => {
         this.playSound("download", 0.5)
-        // Implementasi sederhana: unduh JSON ringkas status saat ini
-        const data = {
-          mass: this.mass,
-          force: this.force,
-          acceleration: this.acceleration,
-          velocity: Math.abs(this.velocity),
-          position: (this.position - 60) / this.scale,
-          time: this.time,
-          runs: Number.parseInt(localStorage.getItem("simulationCount") || "0", 10),
-          totalTime: Number.parseFloat(localStorage.getItem("totalTime") || "0"),
+
+        // Check if MediaRecorder is supported
+        if (!window.MediaRecorder) {
+          alert("MediaRecorder tidak didukung di browser ini. Silakan gunakan browser modern seperti Chrome atau Firefox.")
+          return
         }
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" })
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement("a")
-        a.href = url
-        a.download = "newton-simulation-report.json"
-        document.body.appendChild(a)
-        a.click()
-        a.remove()
-        URL.revokeObjectURL(url)
+
+        // Get canvas stream
+        const stream = this.canvas.captureStream(30) // 30 FPS
+        const mediaRecorder = new MediaRecorder(stream, {
+          mimeType: 'video/webm;codecs=vp9'
+        })
+
+        const chunks = []
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            chunks.push(event.data)
+          }
+        }
+
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(chunks, { type: 'video/webm' })
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement("a")
+          a.href = url
+          a.download = `newton-simulation-video-${Date.now()}.webm`
+          document.body.appendChild(a)
+          a.click()
+          a.remove()
+          URL.revokeObjectURL(url)
+
+          // Reset button text
+          const downloadBtn = document.getElementById("downloadBtn")
+          downloadBtn.innerHTML = "📥 Download Hasil"
+          downloadBtn.disabled = false
+        }
+
+        // Start recording
+        mediaRecorder.start()
+        this.mediaRecorder = mediaRecorder
+        this.isRecording = true
+        const downloadBtn = document.getElementById("downloadBtn")
+        downloadBtn.innerHTML = "⏸️ Merekam Video..."
+        downloadBtn.disabled = true
+
+        // Record until movement stops or max duration
+        const maxRecordDuration = 15000 // 15 seconds
+        const checkStopInterval = setInterval(() => {
+          if (Math.abs(this.velocity) < 0.1 && this.isRunning) {
+            if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+              this.mediaRecorder.stop()
+              this.isRecording = false
+              clearInterval(checkStopInterval)
+            }
+          }
+        }, 100) // Check every 100ms
+
+        setTimeout(() => {
+          if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+            this.mediaRecorder.stop()
+            this.isRecording = false
+          }
+          clearInterval(checkStopInterval)
+        }, maxRecordDuration)
       }
     }
   
