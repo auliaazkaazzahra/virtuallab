@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhysicsLab Virtual - Dashboard</title>
-    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="../css/homepage.css">
 </head>
 <body>
     <!-- Homepage Dashboard -->
@@ -241,7 +241,7 @@
             logout() {
                 DataManager.clearUserSession();
                 UIManager.fadeOutPage(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = '../index.html';
                 });
             }
         };
