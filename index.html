@@ -25,11 +25,28 @@
 
         <section class="hero">
             <div class="container">
-                <h1>Laboratorium Fisika Virtual</h1>
-                <p>Pelajari konsep fisika dengan simulasi interaktif yang menarik dan mudah dipahami.</p>
-                <button class="btn btn-gradient-flip" onclick="showSignup()" style="font-size: 1.2rem; padding: 15px 30px;">
-                    <span>🚀 Mulai Belajar Sekarang</span>
-                </button>
+                <div class="hero-content" style="display: flex; align-items: center; gap: 40px; min-height: 400px;">
+                    <!-- Left side - Character/Mascot -->
+                    <div class="hero-mascot" style="flex: 0 0 300px; text-align: center; position: relative;">
+                        <img src="assets/5.png" alt="PhysicsLab Virtual Mascot" style="width: 350px; height: 420px; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); animation: float 3s ease-in-out infinite;">
+                        <!-- Floating animation for the mascot -->
+                        <style>
+                            @keyframes float {
+                                0%, 100% { transform: translateY(0px); }
+                                50% { transform: translateY(-10px); }
+                            }
+                        </style>
+                    </div>
+
+                    <!-- Right side - Text Content -->
+                    <div class="hero-text" style="flex: 1; padding-left: 20px;">
+                        <h1>Laboratorium Fisika Virtual</h1>
+                        <p>Pelajari konsep fisika dengan simulasi interaktif yang menarik dan mudah dipahami.</p>
+                        <button class="btn btn-gradient-flip" onclick="showSignup()" style="font-size: 1.2rem; padding: 15px 30px;">
+                            <span>🚀 Mulai Belajar Sekarang</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 

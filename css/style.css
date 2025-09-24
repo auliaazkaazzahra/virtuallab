@@ -273,6 +273,30 @@ body {
     .btn-gradient-flip:active {
         transform: translateY(-1px) scale(0.95); /* More pronounced touch feedback on mobile */
     }
+
+    /* Mobile optimization for hero mascot */
+    .hero-content {
+        flex-direction: column;
+        gap: 30px;
+        min-height: auto;
+        text-align: center;
+    }
+
+    .hero-mascot {
+        flex: none;
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .hero-mascot img {
+        width: 200px;
+        height: 250px;
+    }
+
+    .hero-text {
+        padding-left: 0;
+        text-align: center;
+    }
 }
 
 /* Animation Classes */
