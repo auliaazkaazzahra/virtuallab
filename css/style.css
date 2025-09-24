@@ -133,9 +133,9 @@ body {
     transition: transform 0.3s ease;
 }
 
-.feature-card:hover {
+/* .feature-card:hover {
     transform: translateY(-10px);
-}
+} */
 
 .feature-icon {
     font-size: 3rem;
