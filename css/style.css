@@ -41,6 +41,45 @@ body {
     box-shadow: 0 5px 15px rgba(132, 65, 164, 0.4);
 }
 
+/* Gradient Flip Effect for "Mulai Belajar Sekarang" button */
+.btn-gradient-flip {
+    background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient-flip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #FF5B94 0%, #8441A4 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.btn-gradient-flip:hover::before {
+    opacity: 1;
+}
+
+.btn-gradient-flip:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+.btn-gradient-flip:active::before {
+    opacity: 1;
+}
+
+.btn-gradient-flip span {
+    position: relative;
+    z-index: 2;
+}
+
 .btn-secondary {
     background: transparent;
     color: #8441A4;
@@ -220,6 +259,19 @@ body {
     .nav-buttons {
         flex-direction: column;
         gap: 10px;
+    }
+
+    /* Mobile optimization for gradient flip button */
+    .btn-gradient-flip {
+        font-size: 1rem;
+        padding: 12px 24px;
+        min-height: 44px; /* Touch-friendly minimum height */
+        -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+        touch-action: manipulation; /* Optimize touch interactions */
+    }
+
+    .btn-gradient-flip:active {
+        transform: translateY(-1px) scale(0.95); /* More pronounced touch feedback on mobile */
     }
 }
 
