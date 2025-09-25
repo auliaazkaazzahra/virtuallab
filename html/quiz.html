@@ -349,10 +349,9 @@
                         Pemahaman Anda tentang Hukum Newton II sangat baik!
                     </div>
                     
-                    <div class="results-actions">
+                <div class="results-actions">
                         <button class="btn-quiz btn-restart" id="restartBtn">🔄 Ulangi Kuis</button>
                         <button class="btn-quiz btn-review" id="reviewBtn">📋 Lihat Pembahasan</button>
-                        <button class="btn-quiz btn-continue" id="continueBtn">➡️ Lanjut ke Simulasi</button>
                     </div>
                 </div>
             </div>
@@ -562,9 +561,10 @@
         quizResults.style.display = 'block';
     });
 
-    continueBtn.addEventListener('click', () => {
-        window.location.href = 'simulation.html?lab=newton-laws';
-    });
+    // Remove continueBtn event listener to disable "Lanjut ke Simulasi"
+    // continueBtn.addEventListener('click', () => {
+    //     window.location.href = 'simulation.html?lab=newton-laws';
+    // });
 
     // Initialize quiz
     loadQuestion(currentQuestionIndex);
