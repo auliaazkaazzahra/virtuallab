@@ -692,6 +692,9 @@
 
         // Logout functionality
         function logout() {
+            if (!confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+                return;
+            }
             localStorage.removeItem(CONFIG.STORAGE_KEYS.USER);
             document.body.style.transition = CONFIG.ANIMATION.FADE_OUT;
             document.body.style.opacity = '0';

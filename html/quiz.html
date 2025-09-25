@@ -287,7 +287,7 @@
     </style>
 </head>
 <body>
-    <a href="homepage.html" style="position: fixed; top: 20px; left: 20px; color: #8441A4; text-decoration: none; font-size: 1rem; z-index: 10;">← Kembali</a>
+    <a href="homepage.html" id="backLink" style="position: fixed; top: 20px; left: 20px; color: #8441A4; text-decoration: none; font-size: 1rem; z-index: 10;">← Kembali</a>
     <div class="quiz-section" id="quiz">
         <div class="quiz-header">
             <div class="quiz-icon">🧠</div>
@@ -571,6 +571,13 @@
     closeReviewBtn.addEventListener('click', () => {
         quizReview.style.display = 'none';
         quizResults.style.display = 'block';
+    });
+
+    const backLink = document.getElementById('backLink');
+    backLink.addEventListener('click', (e) => {
+        if (!confirm('Apakah Anda yakin ingin keluar dari kuis?')) {
+            e.preventDefault();
+        }
     });
 
     // Remove continueBtn event listener to disable "Lanjut ke Simulasi"
