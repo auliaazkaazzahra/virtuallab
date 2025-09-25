@@ -119,7 +119,9 @@ body {
 
 
 
-.labs-grid {
+.labs-grid,
+.games-grid,
+.quiz-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
@@ -326,6 +328,76 @@ body {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
+/* Tabs Container */
+.tabs-container {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.tabs {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    padding: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    gap: 5px;
+}
+
+.tab-button {
+    padding: 12px 24px;
+    border: none;
+    background: transparent;
+    color: #666;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    min-width: 120px;
+}
+
+.tab-button:hover {
+    background: rgba(132, 65, 164, 0.1);
+    color: #8441A4;
+}
+
+.tab-button.active {
+    background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(132, 65, 164, 0.3);
+}
+
+/* Sections */
+.section {
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.section.active {
+    display: block;
+}
+
+.section h2 {
+    text-align: center;
+    color: #8441A4;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    position: relative;
+}
+
+.section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
+    border-radius: 2px;
+}
+
     .labs-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 25px;
@@ -350,6 +422,27 @@ body {
 
     .lab-meta {
         font-size: 0.85rem;
+    }
+
+    /* Tabs responsive styles */
+    .tabs-container {
+        margin: 30px 0;
+    }
+
+    .tabs {
+        padding: 4px;
+        gap: 4px;
+    }
+
+    .tab-button {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        min-width: 100px;
+    }
+
+    .section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
     }
 }
 
@@ -558,6 +651,33 @@ body {
         width: 100%;
     }
 
+    /* Tabs responsive styles for mobile */
+    .tabs-container {
+        margin: 25px 0;
+    }
+
+    .tabs {
+        flex-direction: column;
+        padding: 8px;
+        gap: 8px;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .tab-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        min-width: auto;
+        width: 100%;
+        text-align: center;
+    }
+
+    .section h2 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+
     /* Animation adjustments for mobile */
     .lab-card:hover {
         transform: translateY(-3px);
@@ -622,6 +742,25 @@ body {
 
     .coming-soon-content h3 {
         font-size: 1.3rem;
+    }
+
+    /* Tabs responsive styles for extra small mobile */
+    .tabs-container {
+        margin: 20px 0;
+    }
+
+    .tabs {
+        max-width: 280px;
+    }
+
+    .tab-button {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+
+    .section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 18px;
     }
 }
 
