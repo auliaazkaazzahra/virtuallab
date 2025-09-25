@@ -298,7 +298,7 @@
         </div>
         
         <div class="quiz-container">
-            <div class="quiz-progress">
+            <div class="quiz-progress" id="quizProgress">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
@@ -476,6 +476,9 @@
             optionsContainer.appendChild(label);
         });
         currentQuestionElem.textContent = index + 1;
+        // Update progress bar fill
+        const progressPercentage = ((index + 1) / quizData.length) * 100;
+        document.getElementById('progressFill').style.width = progressPercentage + '%';
         updateButtons();
     }
 
@@ -506,38 +509,42 @@
         }
     });
 
-    function showResults() {
-        let correctCount = 0;
-        quizData.forEach((q, i) => {
-            if (userAnswers[i] === q.correctIndex) correctCount++;
-        });
-        const incorrectCount = quizData.length - correctCount;
-        const percentage = Math.round((correctCount / quizData.length) * 100);
+        function showResults() {
+            let correctCount = 0;
+            quizData.forEach((q, i) => {
+                if (userAnswers[i] === q.correctIndex) correctCount++;
+            });
+            const incorrectCount = quizData.length - correctCount;
+            const percentage = Math.round((correctCount / quizData.length) * 100);
 
-        quizContent.style.display = 'none';
-        quizResults.style.display = 'block';
+            quizContent.style.display = 'none';
+            quizResults.style.display = 'block';
+            // Hide progress bar after quiz completion
+            document.getElementById('quizProgress').style.display = 'none';
 
-        correctCountElem.textContent = correctCount;
-        incorrectCountElem.textContent = incorrectCount;
-        percentageScoreElem.textContent = percentage + '%';
-        resultsScoreElem.textContent = `${correctCount} / ${quizData.length}`;
+            correctCountElem.textContent = correctCount;
+            incorrectCountElem.textContent = incorrectCount;
+            percentageScoreElem.textContent = percentage + '%';
+            resultsScoreElem.textContent = `${correctCount} / ${quizData.length}`;
 
-        if (percentage >= 80) {
-            performanceMessageElem.textContent = 'Pemahaman Anda tentang Hukum Newton II sangat baik!';
-        } else if (percentage >= 50) {
-            performanceMessageElem.textContent = 'Pemahaman Anda cukup baik, tapi masih bisa ditingkatkan.';
-        } else {
-            performanceMessageElem.textContent = 'Anda perlu belajar lebih banyak tentang Hukum Newton II.';
+            if (percentage >= 80) {
+                performanceMessageElem.textContent = 'Pemahaman Anda tentang Hukum Newton II sangat baik!';
+            } else if (percentage >= 50) {
+                performanceMessageElem.textContent = 'Pemahaman Anda cukup baik, tapi masih bisa ditingkatkan.';
+            } else {
+                performanceMessageElem.textContent = 'Anda perlu belajar lebih banyak tentang Hukum Newton II.';
+            }
         }
-    }
 
-    restartBtn.addEventListener('click', () => {
-        userAnswers.fill(null);
-        currentQuestionIndex = 0;
-        quizResults.style.display = 'none';
-        quizContent.style.display = 'block';
-        loadQuestion(currentQuestionIndex);
-    });
+        restartBtn.addEventListener('click', () => {
+            userAnswers.fill(null);
+            currentQuestionIndex = 0;
+            quizResults.style.display = 'none';
+            quizContent.style.display = 'block';
+            // Show progress bar when restarting quiz
+            document.getElementById('quizProgress').style.display = 'flex';
+            loadQuestion(currentQuestionIndex);
+        });
 
     reviewBtn.addEventListener('click', () => {
         quizResults.style.display = 'none';
