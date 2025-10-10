@@ -1,4 +1,3 @@
-// Configuration & Constants
 const CONFIG = {
     AVAILABLE_LABS: ['newton-laws'],
     STORAGE_KEYS: {
@@ -10,7 +9,6 @@ const CONFIG = {
     }
 };
 
-// Data for all content types
 const CONTENT_DATA = {
     simulasi: [
         {
@@ -69,49 +67,37 @@ const CONTENT_DATA = {
     ]
 };
 
-// Tab switching functionality
 function switchTab(tabName) {
-    // Remove active class from all tabs and content
     document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.classList.remove('active');
     });
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
     });
-
-    // Add active class to selected tab and content
     document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
     document.getElementById(`${tabName}-content`).classList.add('active');
-
-    // Populate content for the active tab
     populateContent(tabName);
 }
 
-// Populate content based on tab
 function populateContent(tabName) {
     const grid = document.getElementById(`${tabName}Grid`);
     const data = CONTENT_DATA[tabName] || [];
-
     grid.innerHTML = '';
-
     data.forEach(item => {
         const card = createContentCard(item, tabName);
         grid.appendChild(card);
     });
 }
 
-// Create content card
 function createContentCard(item, type) {
     const card = document.createElement('div');
     card.className = 'content-card fade-in';
-
     const buttonText = getButtonText(item, type);
     let onclick = '';
     if (item.available) {
         if (type === 'simulasi') {
             onclick = `showSimulation('${item.id}')`;
         } else if (type === 'quiz') {
-            // For quiz, navigate to quiz.html directly
             onclick = `window.location.href='quiz.html'`;
         } else {
             onclick = `showContent('${item.id}', '${type}')`;
@@ -138,7 +124,6 @@ function createContentCard(item, type) {
     return card;
 }
 
-// Get appropriate button text
 function getButtonText(item, type) {
     if (!item.available) {
         return '🔮 Segera Hadir';
@@ -152,7 +137,6 @@ function getButtonText(item, type) {
     }
 }
 
-// Show simulation (existing functionality)
 function showSimulation(labId) {
     if (CONFIG.AVAILABLE_LABS.includes(labId)) {
         window.location.href = `simulation.html?lab=${labId}`;
@@ -161,17 +145,13 @@ function showSimulation(labId) {
     }
 }
 
-// Show content for other types
 function showContent(contentId, type) {
-    // For now, show coming soon modal for all content types
     showComingSoon(contentId, type);
 }
 
-// Show coming soon modal
 function showComingSoon(contentId, type) {
     const data = CONTENT_DATA[type]?.find(item => item.id === contentId);
     if (!data) return;
-
     const modal = document.createElement('div');
     modal.className = 'coming-soon-modal';
     modal.innerHTML = `
@@ -222,7 +202,6 @@ function showComingSoon(contentId, type) {
     window.currentModal = modal;
 }
 
-// Close coming soon modal
 function closeComingSoon() {
     if (window.currentModal) {
         window.currentModal.style.opacity = '0';
@@ -236,7 +215,6 @@ function closeComingSoon() {
     }
 }
 
-// Logout functionality
 function logout() {
     if (!confirm('Apakah Anda yakin ingin keluar dari akun?')) {
         return;
@@ -249,7 +227,6 @@ function logout() {
     }, CONFIG.ANIMATION.DURATION);
 }
 
-// Initialize user info
 function initializeUserInfo() {
     const userData = localStorage.getItem(CONFIG.STORAGE_KEYS.USER);
     if (userData) {
@@ -257,26 +234,22 @@ function initializeUserInfo() {
         document.getElementById('userName').textContent = user.name || 'John Doe';
         document.getElementById('userAvatar').textContent = user.avatar || 'JD';
     } else {
-        // Redirect to login if not authenticated
         window.location.href = '../index.html';
     }
 }
 
-// Close modal when clicking outside
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('coming-soon-modal')) {
         closeComingSoon();
     }
 });
 
-// Keyboard navigation for modals
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && window.currentModal) {
         closeComingSoon();
     }
 });
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     initializeUserInfo();
     populateContent('simulasi');

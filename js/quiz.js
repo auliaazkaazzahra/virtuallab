@@ -101,7 +101,6 @@ function loadQuestion(index) {
         optionsContainer.appendChild(label);
     });
     currentQuestionElem.textContent = index + 1;
-    // Update progress bar fill
     const progressPercentage = ((index + 1) / quizData.length) * 100;
     document.getElementById('progressFill').style.width = progressPercentage + '%';
     updateButtons();
@@ -144,7 +143,6 @@ function showResults() {
 
     quizContent.style.display = 'none';
     quizResults.style.display = 'block';
-    // Hide progress bar after quiz completion
     document.getElementById('quizProgress').style.display = 'none';
 
     correctCountElem.textContent = correctCount;
@@ -166,7 +164,6 @@ restartBtn.addEventListener('click', () => {
     currentQuestionIndex = 0;
     quizResults.style.display = 'none';
     quizContent.style.display = 'block';
-    // Show progress bar when restarting quiz
     document.getElementById('quizProgress').style.display = 'flex';
     loadQuestion(currentQuestionIndex);
 });
@@ -204,11 +201,4 @@ backLink.addEventListener('click', (e) => {
         e.preventDefault();
     }
 });
-
-// Remove continueBtn event listener to disable "Lanjut ke Simulasi"
-// continueBtn.addEventListener('click', () => {
-//     window.location.href = 'simulation.html?lab=newton-laws';
-// });
-
-// Initialize quiz
 loadQuestion(currentQuestionIndex);

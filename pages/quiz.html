@@ -208,7 +208,6 @@
             line-height: 1.5;
             color: #333;
         }
-        /* Theory Section */
         .theory-section {
             max-width: 900px;
             margin: 40px auto 0;
@@ -362,15 +361,10 @@
                     <button class="btn-close-review" id="closeReviewBtn">✖️</button>
                 </div>
                 <div class="review-content" id="reviewContent">
-                    <!-- Review content will be inserted here -->
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Theory section removed as per user request -->
-
-    <!-- Footer removed as per user request -->
 
 <script>
     const quizData = [
@@ -476,7 +470,6 @@
             optionsContainer.appendChild(label);
         });
         currentQuestionElem.textContent = index + 1;
-        // Update progress bar fill
         const progressPercentage = ((index + 1) / quizData.length) * 100;
         document.getElementById('progressFill').style.width = progressPercentage + '%';
         updateButtons();
@@ -519,7 +512,6 @@
 
             quizContent.style.display = 'none';
             quizResults.style.display = 'block';
-            // Hide progress bar after quiz completion
             document.getElementById('quizProgress').style.display = 'none';
 
             correctCountElem.textContent = correctCount;
@@ -541,7 +533,6 @@
             currentQuestionIndex = 0;
             quizResults.style.display = 'none';
             quizContent.style.display = 'block';
-            // Show progress bar when restarting quiz
             document.getElementById('quizProgress').style.display = 'flex';
             loadQuestion(currentQuestionIndex);
         });
@@ -579,13 +570,6 @@
             e.preventDefault();
         }
     });
-
-    // Remove continueBtn event listener to disable "Lanjut ke Simulasi"
-    // continueBtn.addEventListener('click', () => {
-    //     window.location.href = 'simulation.html?lab=newton-laws';
-    // });
-
-    // Initialize quiz
     loadQuestion(currentQuestionIndex);
 </script>
 </body>
