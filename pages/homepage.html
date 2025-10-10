@@ -601,6 +601,10 @@
                 </div>
 
                 <div class="nav-tabs">
+                    <button class="nav-tab" onclick="switchTab('modul')" data-tab="modul">
+                        <span class="icon">📚</span>
+                        <span>Modul</span>
+                    </button>
                     <button class="nav-tab active" onclick="switchTab('simulasi')" data-tab="simulasi">
                         <span class="icon">🔬</span>
                         <span>Simulation</span>
@@ -618,6 +622,11 @@
 
                 <div id="quiz-content" class="content-section">
                     <div class="content-grid" id="quizGrid">
+                    </div>
+                </div>
+
+                <div id="modul-content" class="content-section">
+                    <div class="content-grid" id="modulGrid">
                     </div>
                 </div>
             </div>
@@ -703,6 +712,32 @@
                     questions: 10,
                     available: false
                 }
+            ],
+            modul: [
+                {
+                    id: 'newton-laws-module',
+                    title: 'Modul Hukum II Newton',
+                    description: 'Pelajari konsep dasar Hukum II Newton, rumus, dan aplikasi dalam kehidupan sehari-hari.',
+                    icon: '📖',
+                    difficulty: 'Pemula',
+                    available: true
+                },
+                {
+                    id: 'projectile-motion-module',
+                    title: 'Modul Gerak Proyektil',
+                    description: 'Materi lengkap tentang gerak peluru, komponen vektor, dan persamaan kinematika.',
+                    icon: '🎯',
+                    difficulty: 'Menengah',
+                    available: false
+                },
+                {
+                    id: 'waves-oscillation-module',
+                    title: 'Modul Gelombang & Osilasi',
+                    description: 'Eksplorasi konsep gelombang mekanik, osilasi harmonik, dan fenomena terkait.',
+                    icon: '🌊',
+                    difficulty: 'Menengah',
+                    available: false
+                }
             ]
         };
 
@@ -741,6 +776,12 @@
                     onclick = `showSimulation('${item.id}')`;
                 } else if (type === 'quiz') {
                     onclick = `window.location.href='quiz.html'`;
+                } else if (type === 'modul') {
+                    if (item.id === 'newton-laws-module') {
+                        onclick = `window.location.href='modul-hukum-newton.html'`;
+                    } else {
+                        onclick = `showContent('${item.id}', '${type}')`;
+                    }
                 } else {
                     onclick = `showContent('${item.id}', '${type}')`;
                 }

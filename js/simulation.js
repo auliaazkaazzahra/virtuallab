@@ -510,6 +510,6 @@ function goBackToDashboard() {
   document.body.style.transition = "opacity 0.3s ease"
   document.body.style.opacity = "0"
   setTimeout(() => {
-    window.location.href = "../pages/homepage.html"
+    window.location.href = "homepage.html"
   }, 300)
 }
