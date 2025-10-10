@@ -643,7 +643,6 @@
                     <h3>📖 Daftar Isi</h3>
                     <div class="toc-nav">
                         <a href="#introduction" class="toc-link">Pendahuluan</a>
-                        <a href="#variables" class="toc-link">Definisi Variabel</a>
                         <a href="#principles" class="toc-link">Prinsip Dasar</a>
                         <a href="#applications" class="toc-link">Aplikasi Nyata</a>
                         <a href="#examples" class="toc-link">Contoh Perhitungan</a>
@@ -663,14 +662,6 @@
                             <div style="font-size: 1.8rem; font-weight: bold; margin-bottom: 3px;">F = m × a</div>
                             <div style="font-size: 0.95rem; opacity: 0.9;">Gaya = Massa × Percepatan</div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="theory-content fade-in" id="variables">
-                    <button class="section-toggle" onclick="toggleSection('variables-content')">
-                        🔍 Definisi Variabel
-                    </button>
-                    <div class="section-content" id="variables-content">
                         <div class="theory-grid">
                             <div class="concept-card">
                                 <div class="concept-title">F (Gaya)</div>
@@ -732,42 +723,42 @@
                         <div class="examples-grid">
                             <div class="example-card">
                                 <div class="example-title">Contoh 1: Mobil Ringan</div>
+                                <p style="font-size: 0.9rem; color: #666;">Mobil ringan dengan gaya mesin 2000 N menghasilkan percepatan berapa?</p>
                                 <div class="example-values">
                                     m = 1000 kg<br/>
                                     F = 2000 N<br/>
                                     <span class="answer-hidden">a = F/m = 2000/1000 = 2 m/s²</span>
                                 </div>
                                 <button class="show-answer-btn" onclick="showAnswer(this)">Tampilkan Jawaban</button>
-                                <p style="font-size: 0.9rem; color: #666;">Mobil ringan dengan gaya mesin 2000 N menghasilkan percepatan berapa?</p>
                             </div>
 
                             <div class="example-card">
                                 <div class="example-title">Contoh 2: Truk Berat</div>
+                                <p style="font-size: 0.9rem; color: #666;">Truk berat dengan gaya mesin yang sama menghasilkan percepatan berapa?</p>
                                 <div class="example-values">
                                     m = 5000 kg<br/>
                                     F = 2000 N<br/>
                                     <span class="answer-hidden">a = F/m = 2000/5000 = 0.4 m/s²</span>
                                 </div>
                                 <button class="show-answer-btn" onclick="showAnswer(this)">Tampilkan Jawaban</button>
-                                <p style="font-size: 0.9rem; color: #666;">Truk berat dengan gaya mesin yang sama menghasilkan percepatan berapa?</p>
                             </div>
 
                             <div class="example-card">
                                 <div class="example-title">Contoh 3: Gaya Ganda</div>
+                                <p style="font-size: 0.9rem; color: #666;">Dengan menggandakan gaya, percepatan menjadi berapa?</p>
                                 <div class="example-values">
                                     m = 1000 kg<br/>
                                     F = 4000 N<br/>
                                     <span class="answer-hidden">a = F/m = 4000/1000 = 4 m/s²</span>
                                 </div>
                                 <button class="show-answer-btn" onclick="showAnswer(this)">Tampilkan Jawaban</button>
-                                <p style="font-size: 0.9rem; color: #666;">Dengan menggandakan gaya, percepatan menjadi berapa?</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="calculator fade-in" id="calculator">
-                    <h3>🧮 Kalkulator Interaktif Hukum Newton II</h3>
+                    <h3>🧮 Kalkulator Hukum Newton II</h3>
                     <div class="calc-inputs">
                         <div class="calc-input">
                             <label for="calc-mass">Massa (kg)</label>
@@ -824,7 +815,6 @@
                 <div class="footer-section">
                     <h4 class="footer-subtitle">📧 Kontak</h4>
                     <p style="opacity: 0.8; margin-bottom: 10px;">support@physiclab.com</p>
-                    <p style="opacity: 0.8; font-size: 0.9rem;">© 2025 PhysicsLab Virtual</p>
                 </div>
             </div>
 
@@ -873,7 +863,7 @@
         }
 
         function showHelp() {
-            alert('Untuk bantuan, hubungi support@physiclab.com atau gunakan tombol bantuan di dashboard.');
+            alert('Untuk bantuan, hubungi support@physiclab.com.');
         }
 
         function initializeUserInfo() {
