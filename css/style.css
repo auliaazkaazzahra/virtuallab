@@ -12,7 +12,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Global Styles */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -42,7 +41,6 @@ body {
     box-shadow: 0 5px 15px rgba(132, 65, 164, 0.4);
 }
 
-/* Gradient Flip Effect for "Mulai Belajar Sekarang" button */
 .btn-gradient-flip {
     background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
     color: white;
@@ -96,7 +94,6 @@ body {
     display: none !important;
 }
 
-/* Landing Page Styles */
 .landing-page {
     min-height: 100vh;
     background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
@@ -182,7 +179,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Auth Modal Styles */
 .modal {
     position: fixed;
     top: 0;
@@ -251,7 +247,6 @@ body {
     border-color: #8441A4;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     html, body {
         width: 100%;
@@ -295,20 +290,18 @@ body {
         font-size: 2.5rem;
     }
 
-    /* Mobile optimization for gradient flip button */
     .btn-gradient-flip {
         font-size: 1rem;
         padding: 12px 24px;
-        min-height: 44px; /* Touch-friendly minimum height */
-        -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
-        touch-action: manipulation; /* Optimize touch interactions */
+        min-height: 44px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
 
     .btn-gradient-flip:active {
-        transform: translateY(-1px) scale(0.95); /* More pronounced touch feedback on mobile */
+        transform: translateY(-1px) scale(0.95);
     }
 
-    /* Mobile optimization for hero mascot */
     .hero-content {
         flex-direction: column;
         gap: 30px;
@@ -333,7 +326,6 @@ body {
     }
 }
 
-/* Animation Classes */
 .fade-in {
     animation: fadeIn 0.5s ease-in;
 }
@@ -496,7 +488,6 @@ body {
     color: #FFFFFF;
 }
 
-/* Responsive Footer */
 @media (max-width: 1024px) {
     .footer-grid {
         grid-template-columns: 1fr 1fr;

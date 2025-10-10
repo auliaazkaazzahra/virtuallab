@@ -429,11 +429,11 @@ input[type="range"]::-moz-range-thumb {
     margin-top: 25px;
 }
 
-.concept-card { 
+.concept-card {
     background: #f8f9fa;
     padding: 20px;
     border-radius: 15px;
-    border-left: 4px solid #8441A4; /*list*/
+    border-left: 4px solid #8441A4;
 }
 
 .concept-title {
@@ -456,7 +456,7 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 15px;
     padding: 20px;
     margin-top: 20px;
-    border-left: 5px solid #FF5B94; /*list*/
+    border-left: 5px solid #FF5B94;
 }
 
 .tips-title {
@@ -484,7 +484,7 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    border-top: 4px solid #8441A4; /*list*/
+    border-top: 4px solid #8441A4;
 }
 
 .example-title {
@@ -745,7 +745,6 @@ input[type="range"]::-moz-range-thumb {
     color: #FFFFFF;
 }
 
-/* Responsive Footer */
 @media (max-width: 1024px) {
     .footer-grid {
         grid-template-columns: 1fr 1fr;
@@ -768,7 +767,7 @@ input[type="range"]::-moz-range-thumb {
     }
 }
 
-/* NOTIFICATION SYSTEM */
+/* Notifikasi Sistem */
 .notification {
     position: fixed;
     top: 20px;
@@ -847,7 +846,7 @@ input[type="range"]::-moz-range-thumb {
     }
 }
 
-/* DOWNLOAD BUTTON RESPONSIVE */
+/* Download Button*/
 @media (max-width: 768px) {
     .simulation-controls {
         flex-direction: column;
