@@ -519,25 +519,25 @@ body {
 
 .footer-section h3,
 .footer-section h4 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .footer-title {
     font-size: 1.8rem;
     color: #FFFFFF;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .footer-subtitle {
     font-size: 1.2rem;
     color: #FFFFFF;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .footer-description {
     line-height: 1.6;
     opacity: 0.9;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
 .footer-links {
@@ -546,7 +546,7 @@ body {
 }
 
 .footer-links li {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .footer-link {
