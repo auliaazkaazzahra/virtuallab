@@ -13,17 +13,14 @@ from models import User
 # Konfigurasi
 SECRET_KEY = "physicslab-secret-key-2024-change-in-production"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 43200  # 30 hari
+ACCESS_TOKEN_EXPIRE_MINUTES = 43200
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
-# Buat semua tabel di database
 Base.metadata.create_all(bind=engine)
-
 app = FastAPI(title="PhysicsLab Virtual API", version="1.0.0")
 
-# CORS - izinkan semua origin untuk development
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -32,7 +29,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Pydantic Models untuk request/response
 class RegisterRequest(BaseModel):
     name: str
     email: EmailStr
@@ -61,7 +57,6 @@ class TokenResponse(BaseModel):
     token_type: str = "bearer"
     user: dict
 
-# Database dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -69,7 +64,6 @@ def get_db():
     finally:
         db.close()
 
-# Utility functions
 def create_access_token(user_id: int, email: str):
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     payload = {
@@ -95,7 +89,6 @@ def get_current_user(
         raise HTTPException(status_code=401, detail="User tidak ditemukan")
     return user
 
-# Routes
 @app.get("/")
 def root():
     return {
@@ -163,12 +156,10 @@ def get_profile(current_user: User = Depends(get_current_user)):
 
 @app.post("/auth/logout")
 def logout(current_user: User = Depends(get_current_user)):
-    # Untuk JWT, logout dilakukan di client side dengan menghapus token
     return {
         "message": "Logout berhasil"
     }
 
 if __name__ == "__main__":
     import uvicorn
-    # Ubah port ke 8001 jika 8000 sudah dipakai
     uvicorn.run(app, host="0.0.0.0", port=8000)
