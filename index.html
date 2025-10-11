@@ -15,8 +15,8 @@
                         <img src="assets/4.png" alt="PhysicsLab Logo" style="width: 60px; height: 60px; margin-right: -5px; vertical-align: middle;"> PhysicsLab Virtual
                     </div>
                     <div class="nav-buttons">
-                        <button class="btn btn-secondary" onclick="showLogin()">Login</button>
-                        <button class="btn btn-primary" onclick="showSignup()">Sign up</button>
+                        <a href="pages/auth.html?mode=login" class="btn btn-secondary">Login</a>
+                        <a href="pages/auth.html?mode=signup" class="btn btn-primary">Sign up</a>
                     </div>
                 </div>
             </div>
@@ -37,9 +37,9 @@
                     <div class="hero-text" style="flex: 1; padding-left: center;">
                         <h1>Laboratorium Fisika Virtual</h1>
                         <p>Pelajari konsep fisika dengan simulasi interaktif yang menarik dan mudah dipahami.</p>
-                        <button class="btn btn-gradient-flip" onclick="showSignup()" style="font-size: 1.2rem; padding: 15px 30px;">
+                        <a href="pages/auth.html" class="btn btn-gradient-flip" style="font-size: 1.2rem; padding: 15px 30px;">
                             <span>Mulai Belajar Sekarang</span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -87,181 +87,10 @@
             </div>
         </section>
     </div>
-    <div id="loginModal" class="modal hidden">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
-            <form class="auth-form" onsubmit="handleLogin(event)">
-                <h2>Masuk ke Akun</h2>
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <div style="position: relative;">
-                        <input type="password" id="loginPassword" required>
-                        <button type="button" onclick="togglePassword('loginPassword')" class="password-toggle" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; width: 20px; height: 20px;"><img src="assets/nonvisible.png" alt="Show Password" style="width: 20px; height: 20px; object-fit: contain;"></button>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">
-                    Login
-                </button>
-                <p style="text-align: center; color: #666;">
-                    Belum punya akun?
-                    <a href="#" onclick="showSignup()" style="color: #8441A4; text-decoration: none;">Daftar di sini</a>
-                </p>
-            </form>
-        </div>
-    </div>
-    <div id="signupModal" class="modal hidden">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
-            <form class="auth-form" onsubmit="handleSignup(event)">
-                <h2>Buat Akun Baru</h2>
-                <div class="form-group">
-                    <label for="signupName">Nama Lengkap</label>
-                    <input type="text" id="signupName" required>
-                </div>
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <div style="position: relative;">
-                        <input type="password" id="signupPassword" required>
-                        <button type="button" onclick="togglePassword('signupPassword')" class="password-toggle" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; width: 20px; height: 20px;"><img src="assets/nonvisible.png" alt="Show Password" style="width: 20px; height: 20px; object-fit: contain;"></button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="signupConfirm">Konfirmasi Password</label>
-                    <div style="position: relative;">
-                        <input type="password" id="signupConfirm" required>
-                        <button type="button" onclick="togglePassword('signupConfirm')" class="password-toggle" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; width: 20px; height: 20px;"><img src="assets/nonvisible.png" alt="Show Password" style="width: 20px; height: 20px; object-fit: contain;"></button>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">
-                    Sign up
-                </button>
-                <p style="text-align: center; color: #666;">
-                    Sudah punya akun?
-                    <a href="#" onclick="showLogin()" style="color: #8441A4; text-decoration: none;">Masuk di sini</a>
-                </p>
-            </form>
-        </div>
-    </div>
 
-    <script>
-        let currentUser = null;
 
-        function showLogin() {
-            closeModal();
-            document.getElementById('loginModal').classList.remove('hidden');
-        }
 
-        function showSignup() {
-            closeModal();
-            document.getElementById('signupModal').classList.remove('hidden');
-        }
 
-        function closeModal() {
-            document.getElementById('loginModal').classList.add('hidden');
-            document.getElementById('signupModal').classList.add('hidden');
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            if (email && password) {
-                currentUser = {
-                    name: email.split('@')[0],
-                    email: email,
-                    avatar: email.charAt(0).toUpperCase() + email.split('@')[0].charAt(1).toUpperCase()
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                closeModal();
-                window.location.href = 'pages/homepage.html';
-                setTimeout(() => {
-                    alert('Login berhasil! Selamat datang di PhysicsLab Virtual.');
-                }, 300);
-            }
-        }
-
-        function handleSignup(event) {
-            event.preventDefault();
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirm = document.getElementById('signupConfirm').value;
-
-            if (password !== confirm) {
-                alert('Password tidak cocok!');
-                return;
-            }
-
-            if (name && email && password) {
-                currentUser = {
-                    name: name,
-                    email: email,
-                    avatar: name.charAt(0).toUpperCase() + (name.split(' ')[1] ? name.split(' ')[1].charAt(0).toUpperCase() : name.charAt(1).toUpperCase())
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                closeModal();
-                window.location.href = 'pages/homepage.html';
-
-                setTimeout(() => {
-                    alert('Akun berhasil dibuat! Selamat bergabung di PhysicsLab Virtual.');
-                }, 300);
-            }
-        }
-
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('currentUser');
-            showLandingPage();
-        }
-
-        function showLandingPage() {
-            document.getElementById('landingPage').classList.remove('hidden');
-        }
-
-        window.addEventListener('load', () => {
-            showLandingPage();
-        });
-
-        window.addEventListener('click', (e) => {
-            const loginModal = document.getElementById('loginModal');
-            const signupModal = document.getElementById('signupModal');
-
-            if (e.target === loginModal || e.target === signupModal) {
-                closeModal();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const button = input.nextElementSibling;
-            const img = button.querySelector('img');
-            if (input.type === 'password') {
-                input.type = 'text';
-                img.src = 'assets/visible.png';
-                img.alt = 'Hide Password';
-            } else {
-                input.type = 'password';
-                img.src = 'assets/nonvisible.png';
-                img.alt = 'Show Password';
-            }
-        }
-    </script>
 
     <footer class="footer fade-in">
       <div class="footer-animated-line"></div>
