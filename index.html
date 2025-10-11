@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Landing Page -->
     <div id="landingPage" class="landing-page">
         <nav class="navbar">
             <div class="container">
@@ -26,10 +25,8 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content" style="display: flex; align-items: center; gap: 40px; min-height: 400px;">
-                    <!-- Left side - Character/Mascot -->
                     <div class="hero-mascot" style="flex: 0 0 300px; text-align: center; position: relative;">
                         <img src="assets/5.png" alt="PhysicsLab Virtual Mascot" style="width: 350px; height: 420px; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); animation: float 3s ease-in-out infinite;">
-                        <!-- Floating animation for the mascot -->
                         <style>
                             @keyframes float {
                                 0%, 100% { transform: translateY(0px); }
@@ -37,8 +34,6 @@
                             }
                         </style>
                     </div>
-
-                    <!-- Right side - Text Content -->
                     <div class="hero-text" style="flex: 1; padding-left: center;">
                         <h1>Laboratorium Fisika Virtual</h1>
                         <p>Pelajari konsep fisika dengan simulasi interaktif yang menarik dan mudah dipahami.</p>
@@ -92,8 +87,6 @@
             </div>
         </section>
     </div>
-
-    <!-- Login Modal -->
     <div id="loginModal" class="modal hidden">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
@@ -120,8 +113,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Signup Modal -->
     <div id="signupModal" class="modal hidden">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
@@ -161,10 +152,8 @@
     </div>
 
     <script>
-        // Application State
         let currentUser = null;
 
-        // Authentication Functions
         function showLogin() {
             closeModal();
             document.getElementById('loginModal').classList.remove('hidden');
@@ -185,23 +174,15 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            // Simulate login (in real app, this would be an API call)
             if (email && password) {
                 currentUser = {
                     name: email.split('@')[0],
                     email: email,
                     avatar: email.charAt(0).toUpperCase() + email.split('@')[0].charAt(1).toUpperCase()
                 };
-
-                // Store user data in localStorage
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
                 closeModal();
-
-                // Redirect to homepage
-                window.location.href = 'html/homepage.html';
-
-                // Show success message
+                window.location.href = 'pages/homepage.html';
                 setTimeout(() => {
                     alert('Login berhasil! Selamat datang di PhysicsLab Virtual.');
                 }, 300);
@@ -220,23 +201,17 @@
                 return;
             }
 
-            // Simulate signup
             if (name && email && password) {
                 currentUser = {
                     name: name,
                     email: email,
                     avatar: name.charAt(0).toUpperCase() + (name.split(' ')[1] ? name.split(' ')[1].charAt(0).toUpperCase() : name.charAt(1).toUpperCase())
                 };
-
-                // Store user data in localStorage
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
                 closeModal();
+                window.location.href = 'pages/homepage.html';
 
-                // Redirect to homepage
-                window.location.href = 'html/homepage.html';
-
-                // Show success message
                 setTimeout(() => {
                     alert('Akun berhasil dibuat! Selamat bergabung di PhysicsLab Virtual.');
                 }, 300);
@@ -249,18 +224,14 @@
             showLandingPage();
         }
 
-        // Navigation Functions
         function showLandingPage() {
             document.getElementById('landingPage').classList.remove('hidden');
         }
 
-        // Initialize app
         window.addEventListener('load', () => {
-            // Show landing page by default
             showLandingPage();
         });
 
-        // Close modal when clicking outside
         window.addEventListener('click', (e) => {
             const loginModal = document.getElementById('loginModal');
             const signupModal = document.getElementById('signupModal');
@@ -270,14 +241,12 @@
             }
         });
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeModal();
             }
         });
 
-        // Password toggle function
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
             const button = input.nextElementSibling;

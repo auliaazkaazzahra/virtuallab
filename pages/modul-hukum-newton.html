@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Hukum Newton II - PhysicsLab Virtual</title>
+    <link rel="stylesheet" href="../css/modul-hukum-newton.css"/>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="dashboard-nav">
+                    <button class="back-button" onclick="goBackToDashboard()">
+                        ← Back
+                    </button>
+                    <div class="logo">
+                        <img src="../assets/4.png" alt="PhysicsLab Logo" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;"> PhysicsLab Virtual
+                    </div>
+                    <div class="user-info">
+                        <span id="userName">John Doe</span>
+                        <div class="avatar" id="userAvatar">JD</div>
+                        <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="module-header fade-in">
+                    <h1>Modul Hukum Newton II</h1>
+                    <p>Hubungan Gaya, Massa, dan Percepatan</p>
+                </div>
+
+                <div class="toc fade-in">
+                    <h3>📖 Daftar Isi</h3>
+                    <div class="toc-nav">
+                        <a href="#introduction" class="toc-link">Pendahuluan</a>
+                        <a href="#principles" class="toc-link">Prinsip Dasar</a>
+                        <a href="#applications" class="toc-link">Aplikasi Nyata</a>
+                        <a href="#examples" class="toc-link">Contoh Perhitungan</a>
+                        <a href="#calculator" class="toc-link">Kalkulator Interaktif</a>
+                    </div>
+                </div>
+
+                <div class="theory-content fade-in" id="introduction">
+                    <button class="section-toggle" onclick="toggleSection('intro-content')">
+                        📚 Pendahuluan Hukum Newton II
+                    </button>
+                    <div class="section-content" id="intro-content">
+                        <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                            <strong>Hukum Newton II</strong> adalah salah satu hukum fundamental dalam fisika yang menjelaskan hubungan antara gaya, massa, dan percepatan suatu benda.
+                        </p>
+                        <div class="formula-display" style="margin: 15px 0; padding: 15px; background: linear-gradient(135deg, #FF5B94, #8441A4); color: white; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 1.8rem; font-weight: bold; margin-bottom: 3px;">F = m × a</div>
+                            <div style="font-size: 0.95rem; opacity: 0.9;">Gaya = Massa × Percepatan</div>
+                        </div>
+                        <div class="theory-grid">
+                            <div class="concept-card">
+                                <div class="concept-title">F (Gaya)</div>
+                                <p>Gaya total yang bekerja pada benda, diukur dalam Newton (N)</p>
+                            </div>
+                            <div class="concept-card">
+                                <div class="concept-title">m (Massa)</div>
+                                <p>Jumlah materi dalam benda, diukur dalam kilogram (kg)</p>
+                            </div>
+                            <div class="concept-card">
+                                <div class="concept-title">a (Percepatan)</div>
+                                <p>Perubahan kecepatan per satuan waktu, diukur dalam m/s²</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="theory-content fade-in" id="principles">
+                    <button class="section-toggle" onclick="toggleSection('principles-content')">
+                        ⚖️ Prinsip Dasar
+                    </button>
+                    <div class="section-content" id="principles-content">
+                        <div class="theory-grid">
+                            <div class="concept-card">
+                                <div class="concept-title">Hubungan Proporsional</div>
+                                <p>Percepatan berbanding lurus dengan gaya total yang bekerja pada benda</p>
+                            </div>
+                            <div class="concept-card">
+                                <div class="concept-title">Hubungan Terbalik</div>
+                                <p>Percepatan berbanding terbalik dengan massa benda</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="theory-content fade-in" id="applications">
+                    <button class="section-toggle" onclick="toggleSection('applications-content')">
+                        🌍 Aplikasi Nyata
+                    </button>
+                    <div class="section-content" id="applications-content">
+                        <div class="theory-grid">
+                            <div class="concept-card">
+                                <div class="concept-title">Mobil vs Truk</div>
+                                <p>Mobil ringan lebih mudah dipercepat dibanding truk berat dengan mesin yang sama</p>
+                            </div>
+                            <div class="concept-card">
+                                <div class="concept-title">Olahraga</div>
+                                <p>Atlet menggunakan teknik untuk memaksimalkan gaya dan meminimalkan massa efektif</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="theory-content fade-in" id="examples">
+                    <button class="section-toggle" onclick="toggleSection('examples-content')">
+                        🧮 Contoh Perhitungan
+                    </button>
+                    <div class="section-content" id="examples-content">
+                        <div class="examples-grid">
+                            <div class="example-card">
+                                <div class="example-title">Contoh 1: Mobil Ringan</div>
+                                <p style="font-size: 0.9rem; color: #666;">Mobil ringan dengan gaya mesin 2000 N menghasilkan percepatan berapa?</p>
+                                <div class="example-values">
+                                    m = 1000 kg<br/>
+                                    F = 2000 N<br/>
+                                    <span class="answer-hidden">a = F/m = 2000/1000 = 2 m/s²</span>
+                                </div>
+                                <button class="show-answer-btn" onclick="showAnswer(this)">Tampilkan Jawaban</button>
+                            </div>
+
+                            <div class="example-card">
+                                <div class="example-title">Contoh 2: Truk Berat</div>
+                                <p style="font-size: 0.9rem; color: #666;">Truk berat dengan gaya mesin yang sama menghasilkan percepatan berapa?</p>
+                                <div class="example-values">
+                                    m = 5000 kg<br/>
+                                    F = 2000 N<br/>
+                                    <span class="answer-hidden">a = F/m = 2000/5000 = 0.4 m/s²</span>
+                                </div>
+                                <button class="show-answer-btn" onclick="showAnswer(this)">Tampilkan Jawaban</button>
+                            </div>
+
+                            <div class="example-card">
+                                <div class="example-title">Contoh 3: Gaya Ganda</div>
+                                <p style="font-size: 0.9rem; color: #666;">Dengan menggandakan gaya, percepatan menjadi berapa?</p>
+                                <div class="example-values">
+                                    m = 1000 kg<br/>
+                                    F = 4000 N<br/>
+                                    <span class="answer-hidden">a = F/m = 4000/1000 = 4 m/s²</span>
+                                </div>
+                                <button class="show-answer-btn" onclick="showAnswer(this)">Tampilkan Jawaban</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calculator fade-in" id="calculator">
+                    <h3>🧮 Kalkulator Hukum Newton II</h3>
+                    <div class="calc-inputs">
+                        <div class="calc-input">
+                            <label for="calc-mass">Massa (kg)</label>
+                            <input type="number" id="calc-mass" placeholder="Masukkan massa">
+                        </div>
+                        <div class="calc-input">
+                            <label for="calc-force">Gaya (N)</label>
+                            <input type="number" id="calc-force" placeholder="Masukkan gaya">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="calculateAcceleration()">Hitung Percepatan</button>
+                    <div class="calc-result" id="calc-result">Percepatan: - m/s²</div>
+                </div>
+
+
+
+                <div style="text-align: center; margin: 20px 0 60px 0;">
+                    <button class="btn btn-primary" onclick="goToSimulation()">
+                        🚀 Coba Simulasi Interaktif
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer fade-in">
+        <div class="footer-animated-line"></div>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3 class="footer-title">PhysicsLab Virtual</h3>
+                    <p class="footer-description">
+                        Platform pembelajaran interaktif untuk memahami konsep fisika dengan simulasi real-time yang akurat dan menyenangkan.
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Navigasi</h4>
+                    <ul class="footer-links">
+                        <li><a href="../pages/homepage.html" class="footer-link">Homepage</a></li>
+                        <li><a href="../pages/simulation-hukum-newton.html?lab=newton-laws" class="footer-link">Simulasi</a></li>
+                        <li><a href="../pages/quiz.html" class="footer-link">Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Informasi</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link" onclick="showAbout()">Tentang</a></li>
+                        <li><a href="#" class="footer-link" onclick="showHelp()">Bantuan</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Kontak</h4>
+                    <p style="opacity: 0.8; margin-bottom: 10px;">support@physiclab.com</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2025 Created with passion and creativity by Aulia Azka. All rights reserved.</p>
+                    <p class="footer-version">Version 1.0 - Newton's Second Law Module</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const CONFIG = {
+            STORAGE_KEYS: {
+                USER: 'currentUser'
+            },
+            ANIMATION: {
+                DURATION: 300,
+                FADE_OUT: 'opacity 0.3s ease'
+            }
+        };
+
+        function goBackToDashboard() {
+            window.location.href = 'homepage.html';
+        }
+
+        function goToSimulation() {
+            window.location.href = 'simulation-hukum-newton.html?lab=newton-laws';
+        }
+
+        function logout() {
+            if (!confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+                return;
+            }
+            localStorage.removeItem(CONFIG.STORAGE_KEYS.USER);
+            document.body.style.transition = CONFIG.ANIMATION.FADE_OUT;
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, CONFIG.ANIMATION.DURATION);
+        }
+
+        function showAbout() {
+            alert('PhysicsLab Virtual adalah platform pembelajaran fisika interaktif yang dikembangkan untuk siswa dan guru.');
+        }
+
+        function showHelp() {
+            alert('Untuk bantuan, hubungi support@physiclab.com.');
+        }
+
+        function initializeUserInfo() {
+            const userData = localStorage.getItem(CONFIG.STORAGE_KEYS.USER);
+            if (userData) {
+                const user = JSON.parse(userData);
+                document.getElementById('userName').textContent = user.name || 'John Doe';
+                document.getElementById('userAvatar').textContent = user.avatar || 'JD';
+            } else {
+                window.location.href = '../index.html';
+            }
+        }
+
+        function toggleSection(contentId) {
+            const content = document.getElementById(contentId);
+            const toggle = content.previousElementSibling;
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                toggle.classList.remove('collapsed');
+            } else {
+                content.classList.add('collapsed');
+                toggle.classList.add('collapsed');
+            }
+        }
+
+        function showAnswer(button) {
+            const answer = button.previousElementSibling.querySelector('.answer-hidden');
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                button.textContent = 'Tampilkan Jawaban';
+            } else {
+                answer.style.display = 'block';
+                button.textContent = 'Sembunyikan Jawaban';
+            }
+        }
+
+        function calculateAcceleration() {
+            const mass = parseFloat(document.getElementById('calc-mass').value);
+            const force = parseFloat(document.getElementById('calc-force').value);
+            const resultDiv = document.getElementById('calc-result');
+
+            if (isNaN(mass) || isNaN(force) || mass <= 0) {
+                resultDiv.textContent = 'Masukkan nilai yang valid!';
+                resultDiv.style.color = '#dc3545';
+                return;
+            }
+
+            const acceleration = force / mass;
+            resultDiv.textContent = `Percepatan: ${acceleration.toFixed(2)} m/s²`;
+            resultDiv.style.color = '#28a745';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeUserInfo();
+        });
+    </script>
+</body>
+</html>
