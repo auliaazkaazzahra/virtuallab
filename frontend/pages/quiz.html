@@ -150,6 +150,52 @@
         transform: translateY(0);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
+
+      .quiz-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .quiz-header > div:nth-child(2) {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      .music-control {
+        margin-left: auto;
+      }
+
+      .music-toggle {
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, .06);
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: linear-gradient(180deg, #8441A4, #AE68C3);
+        box-shadow: 0 20px 60px rgba(162, 82, 255, 0.22),
+                    0 10px 24px rgba(255, 122, 169, 0.16);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: transform 220ms cubic-bezier(.2, .8, .2, 1), box-shadow 220ms cubic-bezier(.2, .8, .2, 1), background 220ms cubic-bezier(.2, .8, .2, 1);
+        font-size: 22px;
+        color: white;
+      }
+
+      .music-toggle:hover {
+        transform: translateY(-1px) scale(1.03);
+      }
+
+      .music-toggle:active {
+        transform: scale(.98);
+      }
+
+      .music-toggle.muted {
+        color: #7a5ea6;
+        background: linear-gradient(180deg, #faf7ff, #f0f0ff);
+      }
   </style>
 </head>
 <body class="dashboard">
@@ -175,10 +221,13 @@
 
     <div class="quiz-section" id="quiz">
         <div class="quiz-header">
-            <div class="quiz-icon">🧠</div>
+            <div class="quiz-icon"></div>
             <div>
                 <div class="quiz-title">Kuis Hukum Newton II</div>
                 <div class="quiz-subtitle">Uji pemahaman Anda tentang F = ma</div>
+            </div>
+            <div class="music-control">
+                <button id="musicToggle" class="music-toggle">🔇</button>
             </div>
         </div>
         
@@ -250,6 +299,8 @@
             </div>
         </div>
     </div>
+
+    <audio id="quizMusic" src="../assets/quiz-music.wav" loop preload="auto" style="display: none;"></audio>
 
 <script>
     const quizData = [
@@ -334,6 +385,30 @@
     const reviewContent = document.getElementById('reviewContent');
     const closeReviewBtn = document.getElementById('closeReviewBtn');
 
+    // Music functionality
+    const musicAudio = document.getElementById('quizMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    let musicEnabled = localStorage.getItem('quizMusicEnabled') === 'true';
+
+    function initMusic() {
+        if (musicEnabled) {
+            musicToggle.textContent = '🔊';
+            musicToggle.classList.remove('muted');
+            musicAudio.play().catch(e => console.log('Autoplay prevented:', e));
+        } else {
+            musicToggle.textContent = '🔇';
+            musicToggle.classList.add('muted');
+            musicAudio.pause();
+            musicAudio.currentTime = 0;
+        }
+    }
+
+    musicToggle.addEventListener('click', () => {
+        musicEnabled = !musicEnabled;
+        localStorage.setItem('quizMusicEnabled', musicEnabled);
+        initMusic();
+    });
+
     totalQuestionsElem.textContent = quizData.length;
 
     function loadQuestion(index) {
@@ -398,6 +473,10 @@
             quizContent.style.display = 'none';
             quizResults.style.display = 'block';
             document.getElementById('quizProgress').style.display = 'none';
+
+            // Stop music when quiz is completed
+            musicAudio.pause();
+            musicAudio.currentTime = 0;
 
             correctCountElem.textContent = correctCount;
             incorrectCountElem.textContent = incorrectCount;
@@ -471,8 +550,11 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', initializeUserInfo);
-    loadQuestion(currentQuestionIndex);
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeUserInfo();
+        initMusic();
+        loadQuestion(currentQuestionIndex);
+    });
 </script>
 </body>
 </html>

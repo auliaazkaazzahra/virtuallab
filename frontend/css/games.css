@@ -1,6 +1,6 @@
 :root {
-  --bg-1: #f7e8ff;
-  --bg-2: #ffe6f1;
+  --bg-1: #F6D7E3;
+  --bg-2: #F9E9FF;
   --bg-3: #fff6ff;
   --primary: #a252ff;
   --secondary: #ff7aa9;
@@ -125,7 +125,7 @@ body {
   color: var(--ink);
   padding: 10px 12px;
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, .86);
+  background: rgba(255, 255, 255, 0.86);
   border: 1px solid var(--glass-2);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45);
 }
@@ -152,7 +152,7 @@ body {
   width: 46px;
   height: 46px;
   border-radius: 14px;
-  background: linear-gradient(180deg, #ffffff, #f4edff);
+  background: linear-gradient(180deg, #8441A4, #AE68C3);
   box-shadow: var(--shadow);
   display: grid;
   place-items: center;

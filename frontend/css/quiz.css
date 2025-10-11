@@ -622,3 +622,30 @@ footer.footer {
     color: #666;
     font-size: 0.9rem;
 }
+
+/* Music Toggle Styles */
+.music-toggle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(132, 65, 164, 0.3);
+    margin-left: 10px;
+}
+
+.music-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(132, 65, 164, 0.4);
+}
+
+.music-toggle:active {
+    transform: scale(0.95);
+}
