@@ -2,7 +2,7 @@
 body {
     background: var(--background);
     margin: 0;
-    padding: 20px;
+    padding: 0;
 }
 
 #backLink {
@@ -43,7 +43,7 @@ body {
     margin: 0 auto;
     background: white;
     border-radius: var(--border-radius);
-    padding: 30px;
+    padding: 300px;
     box-shadow: var(--box-shadow);
 }
 
@@ -52,7 +52,7 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .quiz-icon,
@@ -106,7 +106,7 @@ body {
 .question-card {
     border: 1px solid #ddd;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px 35px;
     margin-bottom: 20px;
 }
 
@@ -129,7 +129,7 @@ body {
 .options-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
 .option-label {
@@ -348,21 +348,21 @@ footer.footer {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f8f9fa;
     margin: 0;
-    padding: 20px;
+    padding: 0;
 }
 .quiz-section {
     max-width: 900px;
     margin: 0 auto;
     background: white;
     border-radius: 15px;
-    padding: 30px;
+    padding: 40px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 .quiz-header {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 .quiz-icon {
     font-size: 2.5rem;
@@ -406,9 +406,10 @@ footer.footer {
 .question-card {
     border: 1px solid #ddd;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px 35px;
     margin-bottom: 20px;
 }
+
 .question-number {
     font-weight: 700;
     margin-bottom: 10px;
@@ -425,7 +426,7 @@ footer.footer {
 .options-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 .option-label {
     display: flex;
