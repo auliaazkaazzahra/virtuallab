@@ -28,17 +28,12 @@ app = FastAPI(title="PhysicsLab Virtual API", version="1.0.0")
 # CORS configuration untuk production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        FRONTEND_URL,
-        "http://localhost:3000",
-        "http://localhost:5500",
-        "http://127.0.0.1:5500",
-        "https://*.vercel.app"  # Allow all Vercel deployments
-    ],
+    allow_origin_regex=r"https://virtuallab-vert.vercel.app/",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 class RegisterRequest(BaseModel):
     name: str

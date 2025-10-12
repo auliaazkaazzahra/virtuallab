@@ -1,6 +1,10 @@
 // Configuration untuk API Backend
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
 const API_CONFIG = {
-    BASE_URL: 'http://127.0.0.1:8000',
+    BASE_URL: isLocal
+        ? 'http://127.0.0.1:8000' // saat develop
+        : 'https://virtuallab-production.up.railway.app', // saat di Vercel
     ENDPOINTS: {
         REGISTER: '/auth/register',
         LOGIN: '/auth/login',
@@ -8,6 +12,7 @@ const API_CONFIG = {
         PROFILE: '/auth/profile'
     }
 };
+
 
 // Helper function untuk get headers dengan token
 function getAuthHeaders() {
