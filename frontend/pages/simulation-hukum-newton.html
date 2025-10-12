@@ -18,7 +18,7 @@
         </div>
         <div class="user-info">
           <span id="userName">Aulia</span>
-          <div class="avatar" id="userAvatar">A</div>
+          <div class="avatar" id="userAvatar" onclick="window.location.href='profile-settings.html'" style="cursor: pointer;">A</div>
           <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">
             Logout
           </button>
@@ -210,30 +210,6 @@
       </div>
     </div>
   </footer>
-
   <script src="../js/simulation-hukum-newton.js"></script>
-  <script>
-    function initializeUserInfo() {
-      const userData = localStorage.getItem('currentUser');
-      if (userData) {
-        const user = JSON.parse(userData);
-        document.getElementById('userName').textContent = user.name || 'Aulia';
-        document.getElementById('userAvatar').textContent = user.avatar || 'A';
-      }
-    }
-
-    function logout() {
-      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
-        localStorage.removeItem('currentUser');
-        window.location.href = '../index.html';
-      }
-    }
-
-    function goBackToDashboard() {
-      window.location.href = 'homepage.html';
-    }
-
-    document.addEventListener('DOMContentLoaded', initializeUserInfo);
-  </script>
 </body>
 </html>

@@ -79,6 +79,28 @@ const continueBtn = document.getElementById('continueBtn');
 const quizReview = document.getElementById('quizReview');
 const reviewContent = document.getElementById('reviewContent');
 const closeReviewBtn = document.getElementById('closeReviewBtn');
+const musicAudio = document.getElementById('quizMusic');
+const musicToggle = document.getElementById('musicToggle');
+let musicEnabled = localStorage.getItem('quizMusicEnabled') === 'true';
+
+function initMusic() {
+    if (musicEnabled) {
+        musicToggle.textContent = '🔊';
+        musicToggle.classList.remove('muted');
+        musicAudio.play().catch(e => console.log('Autoplay prevented:', e));
+    } else {
+        musicToggle.textContent = '🔇';
+        musicToggle.classList.add('muted');
+        musicAudio.pause();
+        musicAudio.currentTime = 0;
+    }
+}
+
+musicToggle.addEventListener('click', () => {
+    musicEnabled = !musicEnabled;
+    localStorage.setItem('quizMusicEnabled', musicEnabled);
+    initMusic();
+});
 
 totalQuestionsElem.textContent = quizData.length;
 
@@ -133,40 +155,43 @@ nextBtn.addEventListener('click', () => {
     }
 });
 
-function showResults() {
-    let correctCount = 0;
-    quizData.forEach((q, i) => {
-        if (userAnswers[i] === q.correctIndex) correctCount++;
-    });
-    const incorrectCount = quizData.length - correctCount;
-    const percentage = Math.round((correctCount / quizData.length) * 100);
+    function showResults() {
+        let correctCount = 0;
+        quizData.forEach((q, i) => {
+            if (userAnswers[i] === q.correctIndex) correctCount++;
+        });
+        const incorrectCount = quizData.length - correctCount;
+        const percentage = Math.round((correctCount / quizData.length) * 100);
 
-    quizContent.style.display = 'none';
-    quizResults.style.display = 'block';
-    document.getElementById('quizProgress').style.display = 'none';
+        quizContent.style.display = 'none';
+        quizResults.style.display = 'block';
+        document.getElementById('quizProgress').style.display = 'none';
 
-    correctCountElem.textContent = correctCount;
-    incorrectCountElem.textContent = incorrectCount;
-    percentageScoreElem.textContent = percentage + '%';
-    resultsScoreElem.textContent = `${correctCount} / ${quizData.length}`;
+        musicAudio.pause();
+        musicAudio.currentTime = 0;
 
-    if (percentage >= 80) {
-        performanceMessageElem.textContent = 'Pemahaman Anda tentang Hukum Newton II sangat baik!';
-    } else if (percentage >= 50) {
-        performanceMessageElem.textContent = 'Pemahaman Anda cukup baik, tapi masih bisa ditingkatkan.';
-    } else {
-        performanceMessageElem.textContent = 'Anda perlu belajar lebih banyak tentang Hukum Newton II.';
+        correctCountElem.textContent = correctCount;
+        incorrectCountElem.textContent = incorrectCount;
+        percentageScoreElem.textContent = percentage + '%';
+        resultsScoreElem.textContent = `${correctCount} / ${quizData.length}`;
+
+        if (percentage >= 80) {
+            performanceMessageElem.textContent = 'Pemahaman Anda tentang Hukum Newton II sangat baik!';
+        } else if (percentage >= 50) {
+            performanceMessageElem.textContent = 'Pemahaman Anda cukup baik, tapi masih bisa ditingkatkan.';
+        } else {
+            performanceMessageElem.textContent = 'Anda perlu belajar lebih banyak tentang Hukum Newton II.';
+        }
     }
-}
 
-restartBtn.addEventListener('click', () => {
-    userAnswers.fill(null);
-    currentQuestionIndex = 0;
-    quizResults.style.display = 'none';
-    quizContent.style.display = 'block';
-    document.getElementById('quizProgress').style.display = 'flex';
-    loadQuestion(currentQuestionIndex);
-});
+    restartBtn.addEventListener('click', () => {
+        userAnswers.fill(null);
+        currentQuestionIndex = 0;
+        quizResults.style.display = 'none';
+        quizContent.style.display = 'block';
+        document.getElementById('quizProgress').style.display = 'flex';
+        loadQuestion(currentQuestionIndex);
+    });
 
 reviewBtn.addEventListener('click', () => {
     quizResults.style.display = 'none';
@@ -195,10 +220,30 @@ closeReviewBtn.addEventListener('click', () => {
     quizResults.style.display = 'block';
 });
 
-const backLink = document.getElementById('backLink');
-backLink.addEventListener('click', (e) => {
-    if (!confirm('Apakah Anda yakin ingin keluar dari kuis?')) {
-        e.preventDefault();
-    }
+function initializeUserInfo() {
+  const userData = localStorage.getItem('currentUser');
+  if (userData) {
+    const user = JSON.parse(userData);
+    document.getElementById('userName').textContent = user.name || 'Aulia';
+    document.getElementById('userAvatar').textContent = user.avatar || 'A';
+  }
+}
+
+function logout() {
+  if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+    localStorage.removeItem('currentUser');
+    window.location.href = '../index.html';
+  }
+}
+
+function goBackToDashboard() {
+  if (confirm('Apakah Anda yakin ingin keluar dari kuis?')) {
+    window.location.href = 'homepage.html';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeUserInfo();
+    initMusic();
+    loadQuestion(currentQuestionIndex);
 });
-loadQuestion(currentQuestionIndex);

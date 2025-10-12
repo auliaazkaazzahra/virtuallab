@@ -549,7 +549,6 @@ body {
     font-size: 1.1rem;
 }
 
-/* Content Sections */
 .content-section {
     display: none;
 }
@@ -634,7 +633,6 @@ body {
     color: #888;
 }
 
-/* Floating Particles Animation */
 .welcome-section .floating-particles {
     position: absolute;
     top: 0;
@@ -690,7 +688,6 @@ body {
     }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .nav-tabs {
         justify-content: flex-start;
@@ -743,7 +740,6 @@ body {
     }
 }
 
-/* Animation Classes */
 .fade-in {
     animation: fadeIn 0.5s ease-in;
 }

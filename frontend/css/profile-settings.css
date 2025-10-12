@@ -1,4 +1,4 @@
-/* Reset and base styles */
+/* Profile Settings Styles */
 * {
     margin: 0;
     padding: 0;
@@ -130,7 +130,6 @@ body {
     padding: 0 0 40px 0;
 }
 
-/* Main container */
 .profile-container {
     display: flex;
     min-height: calc(100vh - 120px);
@@ -139,7 +138,6 @@ body {
     max-width: 100%;
 }
 
-/* Decorative section (left) */
 .decorative-section {
     flex: 1;
     display: flex;
@@ -244,7 +242,6 @@ body {
     animation-play-state: paused;
 }
 
-/* Profile form section (right) */
 .profile-form-section {
     flex: 1;
     background-color: #ffffff;
@@ -333,7 +330,6 @@ input:focus {
     color: #ffffff;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
     .profile-container {
         flex-direction: column;
@@ -401,4 +397,56 @@ input:focus {
     .button-group {
         flex-direction: column;
     }
+}
+
+.profile-photo-display {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    border: 4px solid #8441A4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.profile-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-photo-initials {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-photo-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #8441A4;
+    color: #8441A4;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.edit-photo-btn:hover {
+    background: rgba(255, 255, 255, 1);
 }

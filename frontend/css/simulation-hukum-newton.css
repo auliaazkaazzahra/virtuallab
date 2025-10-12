@@ -586,7 +586,6 @@ input[type="range"]::-moz-range-thumb {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Footer Styles */
 .footer {
     background: linear-gradient(135deg, #630436 0%, #77297A 100%);
     color: white;
@@ -785,7 +784,6 @@ input[type="range"]::-moz-range-thumb {
     }
 }
 
-/* Notifikasi Sistem */
 .notification {
     position: fixed;
     top: 20px;
@@ -864,7 +862,6 @@ input[type="range"]::-moz-range-thumb {
     }
 }
 
-/* Download Button*/
 @media (max-width: 768px) {
     .simulation-controls {
         flex-direction: column;

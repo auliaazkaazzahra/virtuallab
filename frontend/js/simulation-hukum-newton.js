@@ -513,3 +513,25 @@ function goBackToDashboard() {
     window.location.href = "homepage.html"
   }, 300)
 }
+
+function initializeUserInfo() {
+  const userData = localStorage.getItem('currentUser');
+  if (userData) {
+    const user = JSON.parse(userData);
+    document.getElementById('userName').textContent = user.name || 'Aulia';
+    document.getElementById('userAvatar').textContent = user.avatar || 'A';
+  }
+}
+
+function logout() {
+  if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+    localStorage.removeItem('currentUser');
+    window.location.href = '../index.html';
+  }
+}
+
+function goBackToDashboard() {
+  window.location.href = 'homepage.html';
+}
+
+document.addEventListener('DOMContentLoaded', initializeUserInfo);
