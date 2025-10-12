@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physics Space Shooter — Pastel Polished</title>
+  <link rel="stylesheet" href="../css/games.css" />
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="container">
+      <div class="dashboard-nav">
+        <button class="back-button" onclick="goBackToDashboard()">
+          ← Back
+        </button>
+        <div class="logo">
+          <img src="../assets/4.png" alt="" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;"> PhysicsLab Virtual
+        </div>
+        <div class="user-info">
+          <span id="userName">Aulia</span>
+          <div class="avatar" id="userAvatar" onclick="window.location.href='profile-settings.html'" style="cursor: pointer;">A</div>
+          <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="orb one"></div>
+  <div style="height: 100px;"></div>
+  <div class="orb two"></div>
+  <div id="gameContainer">
+    <div class="hud card">
+      <div class="badges">
+        <div class="badge" aria-live="polite"><span class="dot score"></span> Skor: <span id="score">0</span></div>
+        <div class="badge"><span class="dot lives"></span> Nyawa: <span id="lives">3</span></div>
+        <div class="badge"><span class="dot next"></span> Soal berikutnya: <span id="nextQuiz">50</span></div>
+      </div>
+      <div class="hud-right">
+        <button id="soundToggle" title="Hidup/Matikan Suara" aria-label="Hidup/Matikan Suara">🔊</button>
+      </div>
+    </div>
+    <div class="stage card">
+      <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+    <div id="controls">← → untuk bergerak • SPASI untuk menembak</div>
+    <div id="quizModal" class="modal">
+      <div class="modal-inner">
+        <div id="quizProgress">Soal Fisika!</div>
+        <h2> SOAL FISIKA </h2>
+        <p id="quizQuestion"></p>
+        <div id="quizOptions"></div>
+        <div id="feedback"></div>
+      </div>
+    </div>
+    <div id="gameOver" class="modal">
+      <div class="modal-inner" style="text-align:center;">
+        <h1>Permainan Selesai</h1>
+        <p>Skor Akhir: <strong><span id="finalScore">0</span></strong></p>
+        <p>Soal Terjawab: <strong><span id="quizAnswered">0</span></strong></p>
+        <button class="btn" id="restartBtn">Main Lagi</button>
+      </div>
+    </div>
+  </div>
+  <script src="../js/games.js"></script>
+</body>
+</html>

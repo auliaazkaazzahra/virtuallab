@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - PhysicsLab Virtual</title>
+    <link rel="stylesheet" href="../css/profile-settings.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="dashboard-nav">
+                    <button class="back-button" onclick="goBackToDashboard()">
+                        ← Back
+                    </button>
+                    <div class="logo">
+                        <img src="../assets/4.png" alt="PhysicsLab Logo" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;"> PhysicsLab Virtual
+                    </div>
+                    <div class="user-info">
+                        <span id="userName">Aulia User</span>
+                        <div class="avatar" id="userAvatar">AU</div>
+                        <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="profile-container">
+                    <section class="decorative-section">
+                        <div class="image-wrapper">
+                            <img src="../assets/1.png" alt="Decorative character with antennas" class="decorative-image">
+                            <div class="bubble top"></div>
+                            <div class="bubble bottom"></div>
+                            <div class="bubble left-side"></div>
+                            <div class="bubble right-side"></div>
+                            <div class="bubble top-left"></div>
+                            <div class="bubble bottom-right"></div>
+                        </div>
+                    </section>
+
+                    <section class="profile-form-section">
+                        <div class="profile-photo-display">
+                            <img id="profilePhotoImg" src="" alt="Profile Photo" class="profile-photo-img">
+                            <div id="profilePhotoInitials" class="profile-photo-initials">AU</div>
+                            <button class="edit-photo-btn" onclick="document.getElementById('photoInput').click()">✏️</button>
+                        </div>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                        <h1>Profile Settings</h1>
+                        <form>
+                            <div class="form-group">
+                                <label for="full-name">Full Name</label>
+                                <input type="text" id="full-name" name="full-name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" name="new-password" placeholder="Enter new password">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm Password</label>
+                                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
+                            </div>
+                            <div class="button-group">
+                                <button type="submit" class="update-btn">Update</button>
+                                <button type="button" class="cancel-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/config.js"></script>
+    <script src="../js/profile-settings.js"></script>
+</body>
+</html>

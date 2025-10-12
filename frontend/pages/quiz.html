@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz Hukum Newton II - PhysicsLab Virtual</title>
+    <link rel="stylesheet" href="../css/quiz.css" />
+</head>
+<body class="dashboard">
+  <header class="dashboard-header">
+    <div class="container">
+      <div class="dashboard-nav">
+        <button class="back-button" onclick="goBackToDashboard()">
+          ← Back
+        </button>
+        <div class="logo">
+          <img src="../assets/4.png" alt="" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;"> PhysicsLab Virtual
+        </div>
+        <div class="user-info">
+          <span id="userName">Aulia</span>
+          <div class="avatar" id="userAvatar" onclick="window.location.href='profile-settings.html'" style="cursor: pointer;">A</div>
+          <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <div class="quiz-section" id="quiz">
+        <div class="quiz-header">
+            <div class="quiz-icon"></div>
+            <div>
+                <div class="quiz-title">Kuis Hukum Newton II</div>
+                <div class="quiz-subtitle">Uji pemahaman Anda tentang F = ma</div>
+            </div>
+            <div class="music-control">
+                <button id="musicToggle" class="music-toggle">🔇</button>
+            </div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-progress" id="quizProgress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="currentQuestion">1</span> dari <span id="totalQuestions">5</span>
+                </div>
+            </div>
+
+            <div class="quiz-content" id="quizContent">
+                <div class="question-card" id="questionCard">
+                    <div class="question-number" id="questionNumber">Pertanyaan 1</div>
+                    <div class="question-text" id="questionText">Loading...</div>
+                    <div class="question-image" id="questionImage"></div>
+                    <div class="options-container" id="optionsContainer">
+                    </div>
+                    <div class="quiz-buttons">
+                        <button class="btn-quiz btn-prev" id="prevBtn" disabled>⬅️ Sebelumnya</button>
+                        <button class="btn-quiz btn-next" id="nextBtn" disabled>Selanjutnya ➡️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-results" id="quizResults" style="display: none;">
+                <div class="results-header">
+                    <img src="../assets/3.png" alt="Character" class="results-icon" id="resultsIcon">
+                    <div class="results-title" id="resultsTitle">Selamat!</div>
+                    <div class="results-score" id="resultsScore">0/0</div>
+                </div>
+                
+                <div class="results-details">
+                    <div class="score-breakdown">
+                        <div class="score-item correct">
+                            <span class="score-label">Benar:</span>
+                            <span class="score-value" id="correctCount">0</span>
+                        </div>
+                        <div class="score-item incorrect">
+                            <span class="score-label">Salah:</span>
+                            <span class="score-value" id="incorrectCount">0</span>
+                        </div>
+                        <div class="score-item percentage">
+                            <span class="score-label">Persentase:</span>
+                            <span class="score-value" id="percentageScore">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="performance-message" id="performanceMessage">
+                        Pemahaman Anda tentang Hukum Newton II sangat baik!
+                    </div>
+                    
+                <div class="results-actions">
+                        <button class="btn-quiz btn-restart" id="restartBtn">🔄 Ulangi Kuis</button>
+                        <button class="btn-quiz btn-review" id="reviewBtn">📋 Lihat Pembahasan</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-review" id="quizReview" style="display: none;">
+                <div class="review-header">
+                    <h3>📋 Pembahasan Jawaban</h3>
+                    <button class="btn-close-review" id="closeReviewBtn">✖️</button>
+                </div>
+                <div class="review-content" id="reviewContent">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="quizMusic" src="../assets/quiz-music.wav" loop preload="auto" style="display: none;"></audio>
+    
+    <script src="../js/quiz.js"></script>
+</body>
+</html>

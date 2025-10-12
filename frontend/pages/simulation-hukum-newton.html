@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Virtual Lab - Hukum Newton II (F = ma)</title>
+  <link rel="stylesheet" href="../css/simulation-hukum-newton.css"/>
+</head>
+<body class="dashboard">
+  <header class="dashboard-header">
+    <div class="container">
+      <div class="dashboard-nav">
+        <button class="back-button" onclick="goBackToDashboard()">
+          ← Back
+        </button>
+        <div class="logo">
+          <img src="../assets/4.png" alt="" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;"> PhysicsLab Virtual
+        </div>
+        <div class="user-info">
+          <span id="userName">Aulia</span>
+          <div class="avatar" id="userAvatar" onclick="window.location.href='profile-settings.html'" style="cursor: pointer;">A</div>
+          <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-content">
+    <div class="container">
+      <div class="module-header fade-in">
+        <h1>Virtual Lab Fisika</h1>
+        <p>Hukum Newton II: Hubungan Gaya, Massa, dan Percepatan</p>
+        <div style="background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 25px; display: inline-block; margin-top: 10px;">
+          <span style="font-size: 1.1rem;">F = m × a</span>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="simulation-section fade-in" id="simulation">
+          <div class="simulation-header">
+            <div class="simulation-title">🎯 Area Simulasi</div>
+            <div class="simulation-controls">
+              <div class="simulation-status status-ready" id="simulationStatus">
+                ● Siap Dimulai
+              </div>
+              <button class="btn btn-download" id="downloadBtn" onclick="downloadSimulationReport && downloadSimulationReport()">
+                📥 Download Hasil
+              </button>
+            </div>
+          </div>
+          <canvas id="canvas" width="700" height="450"></canvas>
+          <div class="canvas-stats">
+            <div class="stat-item-small">
+              <div class="stat-number" id="simulationCount">0</div>
+              <div class="stat-label">Simulasi yang Dijalankan</div>
+            </div>
+            <div class="stat-item-small">
+              <div class="stat-number" id="totalTime">0</div>
+              <div class="stat-label">Total Waktu (s)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-panel fade-in" id="controls">
+          <div class="formula-section">
+            <div class="formula-main" id="formulaDisplay">F = m × a</div>
+            <div class="formula-calculation" id="calculationDisplay">10 N = 2.0 kg × 5.0 m/s²</div>
+          </div>
+
+          <div class="control-group">
+            <h3>⚙️ Parameter Fisika</h3>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Massa Objek</span>
+                <span class="value-badge" id="massDisplay">2.0 kg</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" id="massSlider" min="0.5" max="10" step="0.1" value="2"/>
+              </div>
+              <div class="slider-marks">
+                <span>0.5 kg</span>
+                <span>5.25 kg</span>
+                <span>10 kg</span>
+              </div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Gaya yang Diberikan</span>
+                <span class="value-badge" id="forceDisplay">10 N</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" id="forceSlider" min="1" max="50" step="1" value="10"/>
+              </div>
+              <div class="slider-marks">
+                <span>1 N</span>
+                <span>25 N</span>
+                <span>50 N</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="buttons-section">
+            <button class="btn btn-start" id="startBtn">
+              ▶️ Mulai Simulasi
+            </button>
+            <button class="btn btn-reset" id="resetBtn">
+              🔄 Reset
+            </button>
+          </div>
+
+          <div class="data-panel">
+            <h4>📊 Data Real-time</h4>
+            <div class="data-grid">
+              <div class="data-item">
+                <div class="data-label">Percepatan</div>
+                <div class="data-value" id="accelerationValue">5.0</div>
+                <div class="data-unit">m/s²</div>
+              </div>
+              <div class="data-item">
+                <div class="data-label">Kecepatan</div>
+                <div class="data-value" id="velocityValue">0.0</div>
+                <div class="data-unit">m/s</div>
+              </div>
+              <div class="data-item">
+                <div class="data-label">Posisi</div>
+                <div class="data-value" id="positionValue">0.0</div>
+                <div class="data-unit">m</div>
+              </div>
+              <div class="data-item">
+                <div class="data-label">Waktu</div>
+                <div class="data-value" id="timeValue">0.0</div>
+                <div class="data-unit">detik</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips-section">
+            <div class="tips-title">💡 Tips Eksperimen</div>
+            <p style="font-size: 0.95rem; line-height: 1.5;">
+              • Coba ubah massa sambil gaya tetap - lihat bagaimana percepatan berubah<br/>
+              • Bandingkan objek ringan vs berat dengan gaya yang sama<br/>
+              • Perhatikan jejak (trail) untuk melihat pola gerakan
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer fade-in">
+    <div class="footer-animated-line"></div>
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3 class="footer-title">Virtual Lab Fisika</h3>
+          <p class="footer-description">
+            Platform pembelajaran interaktif untuk memahami konsep fisika dengan simulasi real-time yang akurat dan menyenangkan.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Navigasi</h4>
+          <ul class="footer-links">
+            <li><a href="homepage.html" class="footer-link">Homepage</a></li>
+            <li><a href="simulation-hukum-newton.html" class="footer-link">Simulasi</a></li>
+            <li><a href="quiz.html" class="footer-link">Quiz</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Keyboard Shortcuts</h4>
+          <div class="shortcuts-list">
+            <div class="shortcut-item">
+              <kbd class="key">Space</kbd>
+              <span>Start/Pause Simulasi</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd class="key">R</kbd>
+              <span>Reset Simulasi</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4 class="footer-subtitle">Efek Suara</h4>
+          <div class="sound-controls">
+            <div class="sound-toggle">
+              <input type="checkbox" id="soundToggle" checked/>
+              <label for="soundToggle" class="sound-label">
+                <span class="sound-icon">🔊</span>
+                <span>Aktifkan Suara</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="footer-info">
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-content">
+          <p>&copy; 2025 Created with passion and creativity by Aulia Azka. All rights reserved.</p>
+          <p class="footer-version">Version 1.0 - Newton's Second Law Simulator</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../js/simulation-hukum-newton.js"></script>
+</body>
+</html>

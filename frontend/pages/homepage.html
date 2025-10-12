@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhysicsLab Virtual - Homepage</title>
+    <link rel="stylesheet" href="../css/homepage.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="dashboard-nav">
+                    <div class="logo">
+                        <img src="../assets/4.png" alt="PhysicsLab Logo" style="width: 40px; height: 40px; margin-right: 0px; vertical-align: middle;">
+                        PhysicsLab Virtual
+                    </div>
+                    <div class="user-info">
+                        <span id="userName">John Doe</span>
+                        <div class="avatar" id="userAvatar" onclick="window.location.href='profile-settings.html'" style="cursor: pointer;">JD</div>
+                        <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px;">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="container">
+                <div class="welcome-section fade-in">
+                    <h1>Selamat Datang di PhysicsLab Virtual!</h1>
+                    <p>Eksplorasi fisika dengan simulasi interaktif, games edukatif, dan materi pembelajaran yang lengkap</p>
+                    <div class="floating-particles">
+                        <div class="particle particle-1"></div>
+                        <div class="particle particle-2"></div>
+                        <div class="particle particle-3"></div>
+                    </div>
+                </div>
+
+                <div class="nav-tabs">
+                    <button class="nav-tab" onclick="switchTab('modul')" data-tab="modul">
+                        <span class="icon">📚</span><span>Modul</span>
+                    </button>
+                    <button class="nav-tab active" onclick="switchTab('simulasi')" data-tab="simulasi">
+                        <span class="icon">🔬</span><span>Simulation</span>
+                    </button>
+                    <button class="nav-tab" onclick="switchTab('quiz')" data-tab="quiz">
+                        <span class="icon">❓</span><span>Quiz</span>
+                    </button>
+                    <button class="nav-tab" onclick="window.location.href='games.html'">
+                        <span class="icon">🎮</span><span>Games</span>
+                    </button>
+                </div>
+
+                <div id="simulasi-content" class="content-section active"><div class="content-grid" id="simulasiGrid"></div></div>
+                <div id="quiz-content" class="content-section"><div class="content-grid" id="quizGrid"></div></div>
+                <div id="modul-content" class="content-section"><div class="content-grid" id="modulGrid"></div></div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer fade-in">
+      <div class="footer-animated-line"></div>
+      <div class="footer-container">
+        <div class="footer-bottom">
+          <div class="footer-bottom-content">
+            <p>&copy; 2025 Created with passion and creativity by Aulia Azka. All rights reserved.</p>
+            <p class="footer-version">Version 1.0 - Newton's Second Law Simulator</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/homepage.js"></script>
+</body>
+</html>
