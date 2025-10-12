@@ -20,4 +20,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
 
 # Run the application - MUST use $PORT from Railway
-CMD uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000}
+CMD uvicorn app:app --host 0.0.0.0 --port ${PORT:-8080}
