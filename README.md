@@ -10,9 +10,11 @@ Platform pembelajaran fisika berbasis web yang menyediakan simulasi interaktif u
 ---
 
 ## Fitur Utama
-- **Autentikasi**: Login & registrasi pengguna  
+- **Autentikasi**: Login & registrasi pengguna
+- **Modul**: Sumber belajar utama yang berisi materi fisika 
 - **Simulasi**: Interaktif dengan parameter & visualisasi real-time  
-- **Quiz**: Latihan soal dengan feedback instan  
+- **Games**: Permainan edukatif berbasis konsep fisika
+- **Quiz**: Latihan soal dengan feedback instan 
 
 ---
 
@@ -28,4 +30,4 @@ Platform pembelajaran fisika berbasis web yang menyediakan simulasi interaktif u
 
 ## Teknologi
 - **Frontend**: HTML, CSS, JavaScript  
-- **Hosting**: Vercel
+- **Hosting**: Vercel (frontend) dan Railway (backend)
