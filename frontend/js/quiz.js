@@ -79,8 +79,6 @@ const continueBtn = document.getElementById('continueBtn');
 const quizReview = document.getElementById('quizReview');
 const reviewContent = document.getElementById('reviewContent');
 const closeReviewBtn = document.getElementById('closeReviewBtn');
-
-// Music functionality
 const musicAudio = document.getElementById('quizMusic');
 const musicToggle = document.getElementById('musicToggle');
 let musicEnabled = localStorage.getItem('quizMusicEnabled') === 'true';
@@ -169,7 +167,6 @@ nextBtn.addEventListener('click', () => {
         quizResults.style.display = 'block';
         document.getElementById('quizProgress').style.display = 'none';
 
-        // Stop music when quiz is completed
         musicAudio.pause();
         musicAudio.currentTime = 0;
 

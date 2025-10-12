@@ -113,7 +113,6 @@ function togglePassword(inputId) {
     }
 }
 
-// Fungsi untuk logout
 async function logout() {
     const token = localStorage.getItem('access_token');
     
@@ -129,23 +128,19 @@ async function logout() {
             console.error('Logout error:', error);
         }
     }
-    
-    // Hapus data dari localStorage
+
     localStorage.removeItem('access_token');
     localStorage.removeItem('currentUser');
-    
-    // Redirect ke halaman utama
+
     window.location.href = '../index.html';
 }
 
-// Fungsi untuk cek apakah user sudah login
 function isLoggedIn() {
     const token = localStorage.getItem('access_token');
     const user = localStorage.getItem('currentUser');
     return token && user;
 }
 
-// Fungsi untuk get user profile dari API
 async function getUserProfile() {
     const token = localStorage.getItem('access_token');
     
@@ -165,20 +160,17 @@ async function getUserProfile() {
         }
         
         const data = await response.json();
-        
-        // Update localStorage dengan data terbaru
+
         localStorage.setItem('currentUser', JSON.stringify(data.user));
         
         return data.user;
     } catch (error) {
-        // Jika token tidak valid, logout
         localStorage.removeItem('access_token');
         localStorage.removeItem('currentUser');
         throw error;
     }
 }
 
-// Event listener saat halaman dimuat
 window.addEventListener('load', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const mode = urlParams.get('mode');
