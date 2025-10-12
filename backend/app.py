@@ -6,14 +6,18 @@ from pydantic import BaseModel, EmailStr, field_validator
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
+import os
 
 from database import SessionLocal, Base, engine
 from models import User
 
 # Konfigurasi
-SECRET_KEY = "physicslab-secret-key-2024-change-in-production"
+SECRET_KEY = os.getenv("SECRET_KEY", "physicslab-secret-key-2024-change-in-production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 43200
+
+# Frontend URL dari environment variable
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
@@ -21,9 +25,16 @@ security = HTTPBearer()
 Base.metadata.create_all(bind=engine)
 app = FastAPI(title="PhysicsLab Virtual API", version="1.0.0")
 
+# CORS configuration untuk production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        FRONTEND_URL,
+        "http://localhost:3000",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+        "https://*.vercel.app"  # Allow all Vercel deployments
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -188,4 +199,5 @@ def update_profile(request: UpdateProfileRequest, current_user: User = Depends(g
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
