@@ -1,4 +1,4 @@
-![Background](./assets/Background.png)
+![Background](frontend/assets/Background.png)
 # Virtual Lab Fisika
 
 [![Deploy](https://img.shields.io/badge/Deploy-Vercel-blue)](https://virtuallab-vert.vercel.app/)  
