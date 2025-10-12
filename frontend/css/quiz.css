@@ -649,3 +649,194 @@ footer.footer {
 .music-toggle:active {
     transform: scale(0.95);
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(132, 65, 164, 0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #8441A4;
+    border: 2px solid #8441A4;
+  }
+
+  .btn-secondary:hover {
+    background: #8441A4;
+    color: white;
+  }
+
+  .dashboard {
+    min-height: 100vh;
+    background: #f8f9fa;
+  }
+
+  .dashboard-header {
+    background: white;
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+  }
+
+  .dashboard-nav {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 60px;
+  }
+
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #8441A4;
+    z-index: 2;
+  }
+
+  .user-info {
+    position: absolute;
+    color: #8441A4;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 2;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8441A4 0%, #FF5B94 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+  }
+
+  .back-button {
+    background: linear-gradient(135deg, rgba(132, 65, 164, 0.1), rgba(255, 91, 148, 0.1));
+    border: none;
+    color: #8441A4;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(132, 65, 164, 0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+  }
+
+  .back-button:hover {
+    background: linear-gradient(135deg, rgba(132, 65, 164, 0.2), rgba(255, 91, 148, 0.2));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: #8441A4;
+  }
+
+  .back-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .quiz-header > div:nth-child(2) {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .music-control {
+    margin-left: auto;
+  }
+
+  .music-toggle {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, .06);
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #8441A4, #AE68C3);
+    box-shadow: 0 20px 60px rgba(162, 82, 255, 0.22),
+                0 10px 24px rgba(255, 122, 169, 0.16);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform 220ms cubic-bezier(.2, .8, .2, 1), box-shadow 220ms cubic-bezier(.2, .8, .2, 1), background 220ms cubic-bezier(.2, .8, .2, 1);
+    font-size: 22px;
+    color: white;
+  }
+
+  .music-toggle:hover {
+    transform: translateY(-1px) scale(1.03);
+  }
+
+  .music-toggle:active {
+    transform: scale(.98);
+  }
+
+  .music-toggle.muted {
+    color: #7a5ea6;
+    background: linear-gradient(180deg, #faf7ff, #f0f0ff);
+}

@@ -57,6 +57,11 @@ class TokenResponse(BaseModel):
     token_type: str = "bearer"
     user: dict
 
+class UpdateProfileRequest(BaseModel):
+    name: str
+    email: EmailStr
+    photo: str = None
+
 def get_db():
     db = SessionLocal()
     try:
@@ -158,6 +163,27 @@ def get_profile(current_user: User = Depends(get_current_user)):
 def logout(current_user: User = Depends(get_current_user)):
     return {
         "message": "Logout berhasil"
+    }
+
+@app.put("/auth/profile")
+def update_profile(request: UpdateProfileRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    # Cek apakah email sudah digunakan oleh user lain
+    if request.email != current_user.email:
+        existing_user = db.query(User).filter(User.email == request.email).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Email sudah digunakan")
+
+    # Update user
+    current_user.name = request.name
+    current_user.email = request.email
+    current_user.photo = request.photo
+
+    db.commit()
+    db.refresh(current_user)
+
+    return {
+        "message": "Profile berhasil diupdate",
+        "user": current_user.to_dict()
     }
 
 if __name__ == "__main__":

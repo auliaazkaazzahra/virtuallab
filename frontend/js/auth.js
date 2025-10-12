@@ -1,5 +1,3 @@
-// auth.js - Fixed version
-
 function showLogin() {
     document.getElementById('signupForm').classList.add('hidden');
     document.getElementById('loginForm').classList.remove('hidden');
@@ -21,12 +19,10 @@ async function handleLogin(event) {
     const password = document.getElementById('loginPassword').value;
     const submitBtn = event.target.querySelector('button[type="submit"]');
     
-    // Disable button dan ubah text
     submitBtn.disabled = true;
     submitBtn.textContent = 'Loading...';
 
     try {
-        // Gunakan API_CONFIG.BASE_URL
         const response = await fetch(`${API_CONFIG.BASE_URL}/auth/login`, {
             method: 'POST',
             headers: {
@@ -41,7 +37,6 @@ async function handleLogin(event) {
             throw new Error(data.detail || 'Login gagal');
         }
 
-        // Simpan token dan user data
         localStorage.setItem('access_token', data.access_token);
         localStorage.setItem('currentUser', JSON.stringify(data.user));
 
@@ -65,18 +60,15 @@ async function handleSignup(event) {
     const confirm = document.getElementById('signupConfirm').value;
     const submitBtn = event.target.querySelector('button[type="submit"]');
 
-    // Validasi password match
     if (password !== confirm) {
         alert('Password tidak cocok!');
         return;
     }
 
-    // Disable button dan ubah text
     submitBtn.disabled = true;
     submitBtn.textContent = 'Loading...';
 
     try {
-        // Gunakan API_CONFIG.BASE_URL
         const response = await fetch(`${API_CONFIG.BASE_URL}/auth/register`, {
             method: 'POST',
             headers: {
@@ -94,7 +86,6 @@ async function handleSignup(event) {
         alert('Akun berhasil dibuat! Silakan login.');
         showLogin();
         
-        // Reset form
         event.target.reset();
 
     } catch (error) {

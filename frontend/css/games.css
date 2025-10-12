@@ -2,7 +2,7 @@
   --bg-1: #F6D7E3;
   --bg-2: #F9E9FF;
   --bg-3: #fff6ff;
-  --primary: #a252ff;
+  --primary: #8441A4;
   --secondary: #ff7aa9;
   --accent: #ffd166;
   --ink: #2f2a38;
@@ -311,7 +311,7 @@ canvas {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(180deg, var(--primary), #8a47e8);
+  background: linear-gradient(180deg, var(--primary), #FF5B94);
   color: #fff;
   border: none;
   padding: 12px 20px;
