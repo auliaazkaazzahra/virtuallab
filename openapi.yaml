@@ -1,0 +1,1036 @@
+openapi: 3.0.4
+info:
+  title: PhysicsLab Virtual API
+  description: |-
+    Platform pembelajaran fisika berbasis web yang menyediakan simulasi interaktif untuk membantu siswa memahami konsep-konsep fisika dengan cara yang menarik dan mudah dipahami.
+    
+    **Fitur Utama:**
+    - **Autentikasi**: Login & registrasi pengguna
+    - **Modul**: Sumber belajar utama yang berisi materi fisika
+    - **Simulasi**: Interaktif dengan parameter & visualisasi real-time
+    - **Games**: Permainan edukatif berbasis konsep fisika
+    - **Quiz**: Latihan soal dengan feedback instan
+    
+    **Fitur Unggulan:**
+    - **Interactive Simulation**: Eksperimen virtual real-time
+    - **Data Visualization**: Grafik & animasi interaktif
+    - **Download Simulation**: Simpan hasil simulasi
+    - **Responsive Design**: Optimal di desktop, tablet, & smartphone
+    - **Multiple Labs**: Beragam topik fisika
+    - **Sound Animation**: Efek audio untuk pengalaman immersive
+    
+    **Links:**
+    - [Frontend](https://virtuallab-vert.vercel.app/)
+    - [Backend](https://virtuallab-production.up.railway.app/)
+
+  version: 2.0.0
+  contact:
+    email: support@physicslab.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://virtuallab-production.up.railway.app/api/v1
+    description: Production server (Railway)
+  - url: http://localhost:3000/api/v1
+    description: Development server
+
+tags:
+  - name: auth
+    description: Authentication dan authorization
+  - name: modules
+    description: Modul pembelajaran fisika
+  - name: simulations
+    description: Simulasi fisika interaktif
+  - name: quizzes
+    description: Kuis dan assessment
+  - name: games
+    description: Games edukatif
+  - name: users
+    description: User management
+  - name: simulation-progress
+    description: Progress simulasi yang dijalankan user
+
+paths:
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Register user baru
+      description: Mendaftarkan user baru ke sistem
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fullName
+                - email
+                - password
+                - confirmPassword
+              properties:
+                fullName:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  example: john@example.com
+                password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  example: password123
+                confirmPassword:
+                  type: string
+                  format: password
+                  example: password123
+      responses:
+        '201':
+          description: Registrasi berhasil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: User registered successfully
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                        example: 507f1f77bcf86cd799439011
+                      fullName:
+                        type: string
+                        example: John Doe
+                      email:
+                        type: string
+                        example: john@example.com
+                      token:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: User sudah terdaftar
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Login user
+      description: Login ke sistem
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john@example.com
+                password:
+                  type: string
+                  format: password
+                  example: password123
+      responses:
+        '200':
+          description: Login berhasil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Login successful
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                      fullName:
+                        type: string
+                      email:
+                        type: string
+                      token:
+                        type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: Logout user
+      description: Logout dari sistem
+      operationId: logout
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Logout berhasil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Logout successful
+
+  /modules:
+    get:
+      tags:
+        - modules
+      summary: Get semua modul pembelajaran
+      description: Mendapatkan daftar semua modul pembelajaran fisika
+      operationId: getModules
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Daftar modul berhasil didapat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Module'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+  /modules/{moduleId}:
+    get:
+      tags:
+        - modules
+      summary: Get modul by ID
+      description: Mendapatkan detail modul berdasarkan ID
+      operationId: getModuleById
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detail modul
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Module'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /simulations:
+    get:
+      tags:
+        - simulations
+      summary: Get semua simulasi
+      description: Mendapatkan daftar simulasi fisika interaktif
+      operationId: getSimulations
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Daftar simulasi
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Simulation'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+  /simulations/{simulationId}:
+    get:
+      tags:
+        - simulations
+      summary: Get simulasi by ID
+      operationId: getSimulationById
+      parameters:
+        - name: simulationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detail simulasi
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Simulation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /simulations/{simulationId}/run:
+    post:
+      tags:
+        - simulations
+      summary: Jalankan simulasi
+      description: Menjalankan simulasi dengan parameter tertentu
+      operationId: runSimulation
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: simulationId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  additionalProperties: true
+                  example:
+                    mass: 10
+                    velocity: 5
+                    angle: 45
+      responses:
+        '200':
+          description: Hasil simulasi
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      result:
+                        type: object
+                      visualization:
+                        type: string
+                      timestamp:
+                        type: string
+                        format: date-time
+
+  /quizzes:
+    get:
+      tags:
+        - quizzes
+      summary: Get semua kuis
+      description: Mendapatkan daftar kuis
+      operationId: getQuizzes
+      parameters:
+        - name: moduleId
+          in: query
+          description: Filter kuis berdasarkan modul
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Daftar kuis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Quiz'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+  /quizzes/{quizId}:
+    get:
+      tags:
+        - quizzes
+      summary: Get kuis by ID
+      operationId: getQuizById
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: quizId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detail kuis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Quiz'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /quizzes/{quizId}/submit:
+    post:
+      tags:
+        - quizzes
+      summary: Submit jawaban kuis
+      description: Submit jawaban dan dapatkan skor instan
+      operationId: submitQuiz
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: quizId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                answers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      questionId:
+                        type: string
+                      answer:
+                        type: string
+      responses:
+        '200':
+          description: Hasil kuis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      score:
+                        type: number
+                        example: 85.5
+                      totalQuestions:
+                        type: integer
+                        example: 10
+                      correctAnswers:
+                        type: integer
+                        example: 8
+                      incorrectAnswers:
+                        type: integer
+                        example: 2
+                      timeSpent:
+                        type: integer
+                        description: Waktu dalam detik
+                        example: 300
+                      passed:
+                        type: boolean
+                        example: true
+                      feedback:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            questionId:
+                              type: string
+                            correct:
+                              type: boolean
+                            userAnswer:
+                              type: string
+                            correctAnswer:
+                              type: string
+                            explanation:
+                              type: string
+
+  /games:
+    get:
+      tags:
+        - games
+      summary: Get semua games
+      description: Mendapatkan daftar games edukatif
+      operationId: getGames
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Daftar games
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Game'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+  /games/{gameId}:
+    get:
+      tags:
+        - games
+      summary: Get game by ID
+      operationId: getGameById
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detail game
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Game'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /games/{gameId}/play:
+    post:
+      tags:
+        - games
+      summary: Play game
+      description: Memulai sesi game baru
+      operationId: playGame
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Game session started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      sessionId:
+                        type: string
+                      gameState:
+                        type: object
+                      startedAt:
+                        type: string
+                        format: date-time
+
+  /users/me:
+    get:
+      tags:
+        - users
+      summary: Get user profile
+      description: Mendapatkan profil user yang sedang login
+      operationId: getMyProfile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      tags:
+        - users
+      summary: Update profile
+      operationId: updateProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /simulation-progress:
+    get:
+      tags:
+        - simulation-progress
+      summary: Get progress simulasi user
+      description: Mendapatkan daftar simulasi yang sudah dijalankan user dengan detail waktu dan total run
+      operationId: getSimulationProgress
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Progress simulasi user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      totalSimulationsRun:
+                        type: integer
+                        example: 15
+                      uniqueSimulations:
+                        type: integer
+                        example: 8
+                      simulationHistory:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            simulationId:
+                              type: string
+                            simulationTitle:
+                              type: string
+                            totalRuns:
+                              type: integer
+                            lastRunAt:
+                              type: string
+                              format: date-time
+                            firstRunAt:
+                              type: string
+                              format: date-time
+                            totalTimeSpent:
+                              type: integer
+                              description: Total waktu dalam detik
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /simulation-progress/{simulationId}:
+    post:
+      tags:
+        - simulation-progress
+      summary: Catat progress simulasi
+      description: Mencatat bahwa user telah menjalankan simulasi tertentu
+      operationId: recordSimulationProgress
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: simulationId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timeSpent:
+                  type: integer
+                  description: Waktu yang dihabiskan dalam detik
+                  example: 120
+                parameters:
+                  type: object
+                  description: Parameter simulasi yang digunakan
+      responses:
+        '201':
+          description: Progress berhasil dicatat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                    example: Simulation progress recorded
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Module:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          example: "Hukum Newton"
+        description:
+          type: string
+          example: "Memahami tiga hukum gerak Newton"
+        duration:
+          type: integer
+          description: Durasi dalam menit
+          example: 45
+        imageUrl:
+          type: string
+          example: "https://example.com/newton.jpg"
+        content:
+          type: string
+          description: Konten pembelajaran dalam format markdown/HTML
+        objectives:
+          type: array
+          items:
+            type: string
+          example: ["Memahami hukum I Newton", "Menerapkan hukum II Newton"]
+        materials:
+          type: array
+          items:
+            type: string
+        videoUrl:
+          type: string
+        relatedSimulations:
+          type: array
+          items:
+            type: string
+        relatedQuizzes:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Simulation:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          example: "Simulasi Gerak Parabola"
+        description:
+          type: string
+        imageUrl:
+          type: string
+        parameters:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              min:
+                type: number
+              max:
+                type: number
+              default:
+                type: number
+              unit:
+                type: string
+        instructions:
+          type: string
+        theory:
+          type: string
+        visualizationType:
+          type: string
+          enum: [2d, 3d, interactive]
+        createdAt:
+          type: string
+          format: date-time
+
+    Quiz:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        moduleId:
+          type: string
+        timeLimit:
+          type: integer
+          description: Waktu dalam detik
+        passingScore:
+          type: number
+          example: 70
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              question:
+                type: string
+              type:
+                type: string
+                enum: [multiple_choice, true_false, short_answer]
+              options:
+                type: array
+                items:
+                  type: string
+              points:
+                type: integer
+              imageUrl:
+                type: string
+        totalPoints:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+
+    Game:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+          example: "Physics Puzzle"
+        description:
+          type: string
+        imageUrl:
+          type: string
+        maxScore:
+          type: integer
+        instructions:
+          type: string
+        gameType:
+          type: string
+          enum: [puzzle, quiz, simulation, adventure]
+        createdAt:
+          type: string
+          format: date-time
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    Pagination:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+          example: 1
+        totalPages:
+          type: integer
+          example: 5
+        totalItems:
+          type: integer
+          example: 50
+        itemsPerPage:
+          type: integer
+          example: 10
+
+    Error:
+      type: object
+      required:
+        - success
+        - error
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "VALIDATION_ERROR"
+            message:
+              type: string
+              example: "Validation failed"
+            details:
+              type: object
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            error:
+              code: "UNAUTHORIZED"
+              message: "Invalid or expired token"
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            error:
+              code: "FORBIDDEN"
+              message: "Insufficient permissions"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            error:
+              code: "NOT_FOUND"
+              message: "Resource not found"
